@@ -16,8 +16,9 @@
 2. **frontier-paper 首批 10–20 题**（人工生产，AI 只能做素材整理与提案草稿）
    - 从 OpenReview / arXiv 选近期论文，按 CURATION_GUIDE 流程由人完成出题与独立评审
    - 候选论文素材库已建立检索通道（近期在线算法 / 流算法 / 学习增强算法论文已核实）
-3. **frontier-algorithm 通道**
-   - Codeforces 题面无法自动抓取（2026-10-05 实测 403）；改为人工选题 + 衍生改写，或寻找提供合法题面 API 的竞赛源
+3. **frontier-algorithm 扩量**（通道已打通）
+   - 导入器 scripts/import_cf_task.py 可用；每题须经官方参考代码与暴力对拍
+   - 按新鲜度滚动跟进新比赛
 4. **外部坐标系接入**
    - HLE / HLE-Diamond adapter：metadata_only，建立 academic suite 的 baseline
    - SWE-bench Verified adapter：local_import，建立 software-engineering suite 的 baseline

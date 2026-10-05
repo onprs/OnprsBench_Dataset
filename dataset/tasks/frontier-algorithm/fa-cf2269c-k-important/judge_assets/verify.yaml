@@ -1,0 +1,38 @@
+# 程序验证契约与对拍记录
+source:
+  contest: 2269
+  index: C
+  rating: 1200
+  tags: [constructive algorithms, greedy, two pointers]
+  contest_date: "2026-09-26"
+  statement_url: https://codeforces.com/contest/2269/problem/C
+  editorial_url: https://codeforces.com/blog/entry/157140
+  limits: { time: "2s", memory: "256MB", sum_n: 100000 }
+
+redistribution: metadata_only   # 题面/题解不入库，见 LICENSING.md
+
+local_import:
+  importer: scripts/import_cf_task.py
+  command: python scripts/import_cf_task.py --contest 2269 --index C
+  output_dir: imported/cf/2269c/
+  # 对规范化文本（UTF-8、LF 换行）计算的 sha256 前 16 位
+  content_sha256:
+    statement.txt: 814adc3459e7b103
+    samples.json: b0346b4e0a2aad39
+    editorial.txt: 28dc0e6d74af2569
+    official.cpp: 51cace4a39c718f4
+
+evaluation:
+  mode: 程序判题
+  reference_solution: 本地导入的 official.cpp（官方题解代码，judge 侧锚点）
+  tests:
+    - 官方样例（samples.json）
+    - 应力测试：generator.py 生成，期望输出由 reference_solution 计算
+  harness:
+    generator: judge_assets/generator.py
+    brute_force: judge_assets/brute_force.py
+
+verification:
+  verified_at: "2026-10-05"
+  method: 官方题解代码（g++ -O2 编译）与暴力记忆化搜索对拍 + 官方样例回归
+  result: 500 个随机小规模用例对拍完全一致；官方样例通过

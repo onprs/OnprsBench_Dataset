@@ -4,6 +4,21 @@
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-10-05
+
+### 新增
+
+- frontier-algorithm 首批 2 个真实竞赛任务（Codeforces Round 1124 Div.2，2026-09-26，新鲜度 F1）
+  - `fa-cf2269c-k-important`（rating 1200）
+  - `fa-cf2269d-xor-even-parity`（rating 1500）
+- Codeforces 本地导入器 `scripts/import_cf_task.py`（题面 / 官方题解 / 官方参考代码的本地下载与 hash 核对，内容不入库）
+- 竞赛任务对拍验证工具（生成器 + 暴力基准，judge_assets/）：官方参考代码已与暴力完成对拍（C 题 500 例、D 题 300 例，另均通过官方样例）
+
+### 改进
+
+- frontier-algorithm suite 调整为 fresh 层：真实新题按 metadata_only 接入，judge 锚定官方题解而非衍生改写
+- 文档更新 Codeforces 通道的可用获取方式（浏览器 UA 可读公开页，内容仍不入库）
+
 ## [0.2.0] - 2026-10-05
 
 ### 新增

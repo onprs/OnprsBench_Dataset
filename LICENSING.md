@@ -27,6 +27,7 @@
 - **HLE / HLE-Diamond**（`cais/hle`，MIT）：上游明确要求不要公开分享、转传或分发数据集内容，以保护基准完整性。尽管许可为 MIT，本仓库按 `metadata_only` 处理。
 - **LiveCodeBench**（代码 MIT；HF 数据集卡标注 `license: cc`）：题面聚合自 LeetCode / AtCoder / Codeforces，平台题面的再分发权利不清晰。按 `metadata_only` 处理，题面由用户本地导入。
 - **SWE-bench Verified**（`princeton-nlp/SWE-bench_Verified`）：数据集卡未声明许可；记录内容派生自各开源仓库，适用各仓库自身许可。按 `local_import` 处理。
+- **Codeforces**：API 不提供题面正文；公开网页在浏览器 UA 下可读（2026-10-05 实测），但未见任何再分发授权。题面、官方题解与官方代码一律按 `metadata_only` 处理：仓库存元数据、hash 与导入器，内容由用户本地获取。
 - **Fresh SWE 自采内容**（frontier-swe）：issue 正文与补丁文本来自许可宽松的仓库（当前为 BSD-3-Clause 的 pallets 系列），适用仓库许可、允许再分发。按 `redistributable` 处理并署名；仅对许可明确的仓库开放此通道，其余仍按 `local_import`。
 
 ## 4. 每个来源 / 任务必须记录

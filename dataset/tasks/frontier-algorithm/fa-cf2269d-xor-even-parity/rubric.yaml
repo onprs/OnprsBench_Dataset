@@ -1,0 +1,23 @@
+rubric_version: 1
+dimensions:
+  - id: correctness
+    weight: 0.75
+    description: 程序 verifier 判定：通过官方样例，且通过生成器产生的应力测试集（期望输出由官方参考代码计算，并经连通分量暴力核验确认）。
+    anchors:
+      - score: 0.0
+        description: 官方样例未通过。
+      - score: 0.5
+        description: 样例通过但应力测试存在失败用例（常见于漏掉不变量分析、逐查询暴力重算错误）。
+      - score: 1.0
+        description: 样例与应力测试全部通过。
+
+  - id: efficiency
+    weight: 0.25
+    description: 复杂度满足约束：q 次更新应 O(1) 增量维护（总复杂度 O(n+q) 级别）。
+    anchors:
+      - score: 0.0
+        description: 每次更新重算全量且复杂度过高，无法完成最大规模。
+      - score: 0.5
+        description: 思路正确但实现低效，临界规模超时。
+      - score: 1.0
+        description: O(n+q) 级别，最大规模在时限内完成。

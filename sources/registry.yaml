@@ -21,7 +21,7 @@ sources:
     license: 题面权利归平台与作者，未见再分发授权
     redistribution: metadata_only
     checked_at: "2026-10-05"
-    notes: 仅记录 contest id / problem id / 日期 / hash；题面不复制入库。API 不提供题面正文，网页抓取受反爬限制（2026-10-05 实测 403）；题面获取需用户本地人工完成。
+    notes: 仅记录 contest id / problem id / 日期 / hash；题面与题解不复制入库。API 不提供题面正文；公开网页以浏览器 UA 可读（2026-10-05 实测，匿名脚本 UA 会被 403）；通过 scripts/import_cf_task.py 在本地下载。
 
   - id: arxiv
     name: arXiv

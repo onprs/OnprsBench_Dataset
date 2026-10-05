@@ -1,6 +1,8 @@
 id: frontier-algorithm
 name: Frontier Algorithm Tasks
-description: 来自近期算法进展与竞赛高区分度题目的衍生算法任务。
-layer: derived
+description: 近期竞赛新题（metadata_only 接入，题面本地导入；judge 锚定官方题解代码与暴力对拍验证）。
+layer: fresh
 adapter: null
-tasks: []
+tasks:
+  - fa-cf2269c-k-important
+  - fa-cf2269d-xor-even-parity

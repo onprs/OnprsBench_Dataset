@@ -57,6 +57,15 @@ frontier-swe 任务来自真实 GitHub issue 与已合并修复 PR，答案由�
 3. **入库**：拆分 `test.patch` / `fix.patch`；`problem.md` 引用真实 issue 正文并署名；`reference/solution.md` 基于真实 diff 撰写根因与修复分析；`rubric.yaml` 以程序 verifier 为主维度。
 4. **状态**：完成复现验证后至少为 `review`；经独立评审与框架基线运行后转 `active`。
 
-## 6. 数量纪律
+## 6. 竞赛题生产线（frontier-algorithm）
+
+竞赛任务锚定真实题目，禁止人工改写题面或自写参考解答充当标准答案。
+
+1. **选题**：近期比赛、难度有区分度；通过 Codeforces API 获取元数据（contest id、index、rating、tags、日期）。
+2. **导入**：`python scripts/import_cf_task.py --contest <id> --index <题号>`，本地获得题面、官方题解与官方参考代码（不入库）。
+3. **对拍验证**（强制）：编写 `judge_assets/generator.py`（随机用例）与 `judge_assets/brute_force.py`（暴力基准），与官方参考代码对拍（小规模数百例），并回归官方样例；结果记入 `judge_assets/verify.yaml`。
+4. **入库**：仓库只保存元数据、hash、rubric 与验证契约；题面与题解由使用者本地导入。
+
+## 7. 数量纪律
 
 不追求任务数量。单道经过完整流程的 frontier 任务价值高于批量生成的低质量任务。禁止使用未经人工审核的批量 LLM 生成题。

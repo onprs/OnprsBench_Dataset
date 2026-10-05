@@ -1,0 +1,38 @@
+# 程序验证契约与对拍记录
+source:
+  contest: 2269
+  index: D
+  rating: 1500
+  tags: [bitmasks, greedy]
+  contest_date: "2026-09-26"
+  statement_url: https://codeforces.com/contest/2269/problem/D
+  editorial_url: https://codeforces.com/blog/entry/157140
+  limits: { time: "2s", memory: "256MB", sum_n: 200000, sum_q: 200000 }
+
+redistribution: metadata_only   # 题面/题解不入库，见 LICENSING.md
+
+local_import:
+  importer: scripts/import_cf_task.py
+  command: python scripts/import_cf_task.py --contest 2269 --index D
+  output_dir: imported/cf/2269d/
+  # 对规范化文本（UTF-8、LF 换行）计算的 sha256 前 16 位
+  content_sha256:
+    statement.txt: e40aac467da9d740
+    samples.json: be94df965d6dffe6
+    editorial.txt: 93d8da30a3bf8062
+    official.cpp: 132250d6b1eb0505
+
+evaluation:
+  mode: 程序判题
+  reference_solution: 本地导入的 official.cpp（官方题解代码，judge 侧锚点）
+  tests:
+    - 官方样例（samples.json）
+    - 应力测试：generator.py 生成，期望输出由 reference_solution 计算
+  harness:
+    generator: judge_assets/generator.py
+    brute_force: judge_assets/brute_force.py
+
+verification:
+  verified_at: "2026-10-05"
+  method: 官方题解代码（g++ -O2 编译）与连通分量暴力（BFS 求可达最大"3 的倍数"元素数）对拍 + 官方样例回归
+  result: 300 个随机小规模用例对拍完全一致；官方样例通过
