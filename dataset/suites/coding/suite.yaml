@@ -1,0 +1,6 @@
+id: coding
+name: Coding Coordinate Suite
+description: 编程能力坐标系（LiveCodeBench），经适配器以 metadata_only 方式接入，题面由用户本地导入。
+layer: external
+adapter: livecodebench
+tasks: []

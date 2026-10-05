@@ -1,0 +1,120 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://onprs.github.io/schemas/task.schema.json",
+  "title": "OnprsBench Dataset Task Metadata",
+  "description": "单个任务 meta.yaml 的 schema（Dataset Protocol v1）",
+  "type": "object",
+  "required": [
+    "id", "revision", "title", "suite", "type", "tags",
+    "lifecycle", "freshness", "difficulty", "source",
+    "contamination", "license", "authors"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$",
+      "description": "全数据集唯一，首次发布后不可变更"
+    },
+    "revision": { "type": "integer", "minimum": 1 },
+    "title": { "type": "string", "minLength": 1 },
+    "suite": { "type": "string", "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$" },
+    "type": {
+      "type": "string",
+      "enum": [
+        "algorithm_design", "derivation", "counterexample", "proof",
+        "transfer", "implementation", "debug", "code_generation",
+        "issue_resolution", "academic_qa", "other"
+      ]
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
+      "uniqueItems": true
+    },
+    "lifecycle": {
+      "type": "object",
+      "required": ["status", "stage"],
+      "additionalProperties": false,
+      "properties": {
+        "status": { "type": "string", "enum": ["draft", "review", "active", "deprecated", "superseded"] },
+        "stage": { "type": "string", "enum": ["fresh", "mature", "legacy"] },
+        "superseded_by": { "type": ["string", "null"] },
+        "errata": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["revision", "date", "note"],
+            "additionalProperties": false,
+            "properties": {
+              "revision": { "type": "integer", "minimum": 1 },
+              "date": { "type": "string", "format": "date" },
+              "note": { "type": "string", "minLength": 1 }
+            }
+          }
+        }
+      }
+    },
+    "freshness": {
+      "type": "object",
+      "required": ["class", "created_at"],
+      "additionalProperties": false,
+      "properties": {
+        "class": { "type": "string", "enum": ["F0", "F1", "F2", "legacy"] },
+        "created_at": { "type": "string", "format": "date" },
+        "source_published_at": { "type": ["string", "null"], "format": "date" },
+        "dataset_release_at": { "type": ["string", "null"], "format": "date" }
+      }
+    },
+    "difficulty": {
+      "type": "object",
+      "required": ["author"],
+      "additionalProperties": false,
+      "properties": {
+        "author": { "type": "string", "enum": ["easy", "medium", "hard", "very_hard", "frontier"] }
+      }
+    },
+    "source": {
+      "type": "object",
+      "required": ["kind", "name", "license", "redistribution", "attribution"],
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": ["paper", "contest", "github_issue", "external_benchmark", "synthetic", "human"]
+        },
+        "name": { "type": "string", "minLength": 1 },
+        "url": { "type": ["string", "null"] },
+        "published_at": { "type": ["string", "null"], "format": "date" },
+        "license": { "type": "string", "minLength": 1 },
+        "redistribution": { "type": "string", "enum": ["redistributable", "metadata_only", "local_import"] },
+        "attribution": { "type": "string", "minLength": 1 },
+        "upstream_version": { "type": ["string", "null"] },
+        "upstream_commit": { "type": ["string", "null"] },
+        "adapter": { "type": ["string", "null"], "description": "生成该任务的适配器 id" }
+      }
+    },
+    "contamination": {
+      "type": "object",
+      "required": ["risk", "exact_problem_public", "reference_public", "transformation", "notes"],
+      "additionalProperties": false,
+      "properties": {
+        "risk": { "type": "string", "enum": ["low", "medium", "high"] },
+        "source_publication_date": { "type": ["string", "null"], "format": "date" },
+        "exact_problem_public": { "type": "boolean" },
+        "reference_public": { "type": "boolean" },
+        "transformation": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+        "notes": { "type": "string" }
+      }
+    },
+    "license": { "type": "string", "minLength": 1, "description": "该任务内容本身的许可" },
+    "authors": { "type": "array", "items": { "type": "string", "minLength": 1 }, "minItems": 1 },
+    "flagship": { "type": "boolean", "default": false },
+    "visibility_overrides": {
+      "type": "object",
+      "description": "覆盖默认可见性映射：相对路径 -> solver|judge|meta",
+      "additionalProperties": { "type": "string", "enum": ["solver", "judge", "meta"] }
+    },
+    "notes": { "type": "string" }
+  }
+}

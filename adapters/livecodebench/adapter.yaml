@@ -1,0 +1,16 @@
+adapter:
+  id: livecodebench
+  version: 0.1.0
+  status: prototype
+  entrypoint: adapter.py
+upstream:
+  name: LiveCodeBench
+  homepage: https://github.com/LiveCodeBench/LiveCodeBench
+  dataset_repo: https://huggingface.co/datasets/livecodebench/code_generation_lite
+  license: 代码 MIT；HF 数据集卡标注 license: cc
+  redistribution: metadata_only
+  version_pinning: 以 HF 版本标签固定（release_v1 … release_v6）
+  upstream_version: release_v6
+  upstream_commit: null
+notes: 题面聚合自 LeetCode / AtCoder / Codeforces，平台题面权利不清晰；本适配器只生成 metadata-only 任务骨架，题面由用户本地导入。
+checked_at: "2026-10-05"

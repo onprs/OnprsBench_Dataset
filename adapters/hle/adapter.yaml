@@ -1,0 +1,16 @@
+adapter:
+  id: hle
+  version: 0.1.0
+  status: planned
+  entrypoint: null
+upstream:
+  name: Humanity's Last Exam（含 HLE-Diamond 子集）
+  homepage: https://github.com/centerforaisafety/hle
+  dataset_repo: https://huggingface.co/datasets/cais/hle
+  license: MIT（上游另要求不公开分享、转传或分发数据集内容）
+  redistribution: metadata_only
+  version_pinning: 以 HF commit 固定；HLE-Diamond 为 2026-09-22 发布的 1000 题子集（500 推理 + 500 知识）
+  upstream_version: null
+  upstream_commit: null
+notes: 尊重上游完整性请求，按 metadata_only 处理；接入时仅记录题目 id、科目、答案 hash 等元数据。
+checked_at: "2026-10-05"

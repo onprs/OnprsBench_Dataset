@@ -1,0 +1,16 @@
+adapter:
+  id: swebench
+  version: 0.1.0
+  status: planned
+  entrypoint: null
+upstream:
+  name: SWE-bench Verified
+  homepage: https://www.swebench.com/
+  dataset_repo: https://huggingface.co/datasets/princeton-nlp/SWE-bench_Verified
+  license: 数据集卡未声明；记录内容派生自各开源仓库，适用各仓库自身许可
+  redistribution: local_import
+  version_pinning: 以 HF commit 固定
+  upstream_version: null
+  upstream_commit: null
+notes: 500 条人工核验样本；solver 侧为 issue 文本 + base_commit 仓库状态，judge 侧为 merged patch、test_patch 与 FAIL_TO_PASS / PASS_TO_PASS 测试集。代码与补丁由用户本地按各仓库许可获取。
+checked_at: "2026-10-05"

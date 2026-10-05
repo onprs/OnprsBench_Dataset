@@ -1,0 +1,56 @@
+rubric_version: 1
+dimensions:
+  - id: correctness
+    weight: 0.30
+    description: 算法与竞争比数值的正确性。最优确定性策略为前 10 天租赁、第 11 天购买，竞争比 19/10 = 1.9。
+    anchors:
+      - score: 0.0
+        description: 算法错误，或竞争比数值错误且与正确答案无关联（如声称不存在常数竞争比）。
+      - score: 0.5
+        description: 方向正确但关键数值有误，例如给出次优阈值（第 10 天购买、竞争比 2.0）却声称最优。
+      - score: 1.0
+        description: 给出第 11 天购买的策略与 1.9 的竞争比，两者均正确。
+
+  - id: core_insight
+    weight: 0.20
+    description: 识别出忠诚折扣改变了费用结构：租 k 天费用为 k−⌊k/6⌋，累计租金达到购买价 10 元的平衡点漂移到第 11 天。
+    anchors:
+      - score: 0.0
+        description: 完全按无折扣模型分析，未提及折扣的影响。
+      - score: 0.5
+        description: 意识到折扣存在影响，但费用函数或平衡点计算有误。
+      - score: 1.0
+        description: 正确写出费用函数并指出平衡点漂移及其对最优阈值的影响。
+
+  - id: complexity
+    weight: 0.15
+    description: 分析的精确性：离线最优 opt(n) = min(10, paid(n)) 的分段刻画，以及各情形下比值的严格计算。
+    anchors:
+      - score: 0.0
+        description: 没有给出离线最优的刻画，或比值计算严重错误。
+      - score: 0.5
+        description: opt(n) 正确但只验证了部分情形，最坏情形定位含糊。
+      - score: 1.0
+        description: 完整分段刻画 opt(n)，正确定位最坏情形（n 恰为购买日或 n→∞）并算出精确比值。
+
+  - id: proof
+    weight: 0.25
+    description: 上界与下界证明的严谨完整性。下界须覆盖：从不购买的策略比值无界；购买日 t≤10、t=11、t≥12 的分类讨论。
+    anchors:
+      - score: 0.0
+        description: 只有结论没有证明，或证明有根本性漏洞。
+      - score: 0.5
+        description: 上界正确，但下界只验证了个别购买日，缺少完整分类（尤其遗漏"从不购买"或 t≥12 的情形）。
+      - score: 1.0
+        description: 上下界证明完整，分类无遗漏，结论 1.9 严格成立。
+
+  - id: completeness
+    weight: 0.10
+    description: 反例构造任务（要求 3）的完成质量与边界情形的处理。
+    anchors:
+      - score: 0.0
+        description: 未给出反例，或反例的竞争比计算错误。
+      - score: 0.5
+        description: 给出了竞争比 ≥2.5 的反例，但缺少对"为何具有迷惑性"的解释，或未讨论取等边界（n=11、n=12）。
+      - score: 1.0
+        description: 反例正确（如 t=7 策略在 n=7 时比值 15/6=2.5），解释到位，并说明取等边界。

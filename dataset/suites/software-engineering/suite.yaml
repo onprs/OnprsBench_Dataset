@@ -1,0 +1,6 @@
+id: software-engineering
+name: Software Engineering Coordinate Suite
+description: 软件工程坐标系（SWE-bench Verified），经适配器以 local_import 方式接入。
+layer: external
+adapter: swebench
+tasks: []

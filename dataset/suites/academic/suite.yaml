@@ -1,0 +1,6 @@
+id: academic
+name: Academic Coordinate Suite
+description: 学术基准坐标系（HLE / HLE-Diamond），经适配器以 metadata_only 方式接入，内容不入库。
+layer: external
+adapter: hle
+tasks: []

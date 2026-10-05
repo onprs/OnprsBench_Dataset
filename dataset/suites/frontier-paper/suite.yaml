@@ -1,0 +1,7 @@
+id: frontier-paper
+name: Frontier Paper Tasks
+description: 基于近期论文核心思想改造的原创任务（算法设计、推导、反例、证明、迁移、实现），考察新任务适应能力。
+layer: derived
+adapter: null
+tasks:
+  - fp-ski-rental-discount

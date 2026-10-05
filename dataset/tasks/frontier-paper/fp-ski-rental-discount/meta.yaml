@@ -1,0 +1,47 @@
+id: fp-ski-rental-discount
+revision: 1
+title: 带忠诚折扣的在线租赁决策
+suite: frontier-paper
+type: algorithm_design
+tags:
+  - online-algorithms
+  - competitive-analysis
+  - counterexample
+  - derived
+lifecycle:
+  status: active
+  stage: mature
+  superseded_by: null
+  errata: []
+freshness:
+  class: F0
+  created_at: "2026-10-05"
+  source_published_at: null
+  dataset_release_at: "2026-10-05"
+difficulty:
+  author: medium
+source:
+  kind: synthetic
+  name: 仓库自编示例（经典在线租赁模型的折扣变体）
+  url: null
+  published_at: null
+  license: CC BY 4.0
+  redistribution: redistributable
+  attribution: OnprsBench contributors
+  upstream_version: null
+  upstream_commit: null
+  adapter: null
+contamination:
+  risk: medium
+  source_publication_date: null
+  exact_problem_public: false
+  reference_public: false
+  transformation:
+    - 在经典租赁模型上增加"每 6 个租赁日免 1 天"的忠诚折扣
+    - 折扣使累计租金达到购买价的平衡点发生漂移，经典阈值策略不再最优
+  notes: 经典模型广泛存在于教材，模型可能见过；本变体的最优阈值与平衡点均不同，直接套用经典结论只能得到次优答案。
+license: CC BY 4.0
+authors:
+  - onprs
+flagship: true
+notes: 协议结构示例任务，同时是一道可判分的完整题目。

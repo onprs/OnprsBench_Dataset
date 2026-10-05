@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://onprs.github.io/schemas/manifest.schema.json",
+  "title": "OnprsBench Dataset Manifest",
+  "description": "构建产物 manifest.yaml 的 schema（Dataset Protocol v1）",
+  "type": "object",
+  "required": ["protocol_version", "dataset", "suites"],
+  "additionalProperties": false,
+  "properties": {
+    "protocol_version": { "type": "string", "const": "1" },
+    "dataset": {
+      "type": "object",
+      "required": ["id", "name", "version", "release_date", "revision", "description", "license"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$" },
+        "name": { "type": "string", "minLength": 1 },
+        "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+        "release_date": { "type": "string", "format": "date" },
+        "revision": { "type": "string", "minLength": 1, "description": "构建时的 git commit；无仓库信息时为 uncommitted" },
+        "description": { "type": "string" },
+        "license": { "type": "string" }
+      }
+    },
+    "suites": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "description", "layer", "tasks"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "description": { "type": "string" },
+          "layer": { "type": "string", "enum": ["external", "fresh", "derived"] },
+          "adapter": { "type": ["string", "null"] },
+          "tasks": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "id", "revision", "title", "type", "tags", "status",
+                "path", "solver_visible", "judge_visible", "metadata", "hashes"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "id": { "type": "string" },
+                "revision": { "type": "integer", "minimum": 1 },
+                "title": { "type": "string" },
+                "type": { "type": "string" },
+                "tags": { "type": "array", "items": { "type": "string" } },
+                "status": { "type": "string", "enum": ["draft", "review", "active", "deprecated", "superseded"] },
+                "path": { "type": "string" },
+                "solver_visible": { "type": "array", "items": { "type": "string" } },
+                "judge_visible": { "type": "array", "items": { "type": "string" } },
+                "metadata": {
+                  "type": "object",
+                  "required": ["difficulty", "freshness", "contamination", "flagship"],
+                  "additionalProperties": false,
+                  "properties": {
+                    "difficulty": { "type": "string" },
+                    "freshness": { "type": "string" },
+                    "contamination": { "type": "string" },
+                    "flagship": { "type": "boolean" }
+                  }
+                },
+                "hashes": {
+                  "type": "object",
+                  "required": ["bundle_sha256", "files"],
+                  "additionalProperties": false,
+                  "properties": {
+                    "bundle_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+                    "files": {
+                      "type": "object",
+                      "additionalProperties": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://onprs.github.io/schemas/suite.schema.json",
+  "title": "OnprsBench Dataset Suite",
+  "description": "suite.yaml 的 schema（Dataset Protocol v1）",
+  "type": "object",
+  "required": ["id", "name", "description", "layer", "tasks"],
+  "additionalProperties": false,
+  "properties": {
+    "id": { "type": "string", "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$" },
+    "name": { "type": "string", "minLength": 1 },
+    "description": { "type": "string", "minLength": 1 },
+    "layer": { "type": "string", "enum": ["external", "fresh", "derived"] },
+    "adapter": {
+      "type": ["string", "null"],
+      "description": "external 层 suite 对应的适配器 id；自有任务 suite 为 null"
+    },
+    "tasks": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$" },
+      "uniqueItems": true,
+      "description": "属于本 suite 的任务 id 列表"
+    }
+  }
+}

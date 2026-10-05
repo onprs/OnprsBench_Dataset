@@ -1,0 +1,27 @@
+name: dataset-ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: 安装依赖
+        run: pip install -r requirements.txt
+
+      - name: 数据集校验（schema / 引用 / 许可元数据 / 可见性 / 新鲜度）
+        run: python scripts/validate.py
+
+      - name: 单元测试
+        run: python -m unittest discover tests
+
+      - name: 构建演练（验证 manifest 与 hash 生成）
+        run: python scripts/build.py --out /tmp/onprsbench-dist

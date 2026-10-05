@@ -1,0 +1,64 @@
+# 数据来源注册表
+# 每个来源记录许可与再分发分级；分级定义见 LICENSING.md。
+# 核查日期字段记录最近一次人工核实的日期。
+
+sources:
+  - id: openreview
+    name: OpenReview
+    kind: paper
+    url: https://openreview.net/
+    access: api
+    license: 各论文适用其自身许可（多为 CC BY 4.0，以页面标注为准）
+    redistribution: metadata_only
+    checked_at: "2026-10-05"
+    notes: 论文作为知识来源；任务须为衍生创作，参考解答独立撰写。
+
+  - id: codeforces
+    name: Codeforces
+    kind: contest
+    url: https://codeforces.com/
+    access: api
+    license: 题面权利归平台与作者，未见再分发授权
+    redistribution: metadata_only
+    checked_at: "2026-10-05"
+    notes: 仅记录 contest id / problem id / 日期 / hash；题面不复制入库。
+
+  - id: github
+    name: GitHub Issues / Pull Requests
+    kind: github_issue
+    url: https://github.com/
+    access: api
+    license: 适用各目标仓库自身许可
+    redistribution: local_import
+    checked_at: "2026-10-05"
+    notes: 记录 repo、issue/PR 号、base_commit；代码与补丁由用户本地获取。
+
+  - id: hle
+    name: Humanity's Last Exam（含 HLE-Diamond 子集）
+    kind: external_benchmark
+    url: https://huggingface.co/datasets/cais/hle
+    access: huggingface
+    license: MIT（上游另要求不公开再分发数据集内容）
+    redistribution: metadata_only
+    checked_at: "2026-10-05"
+    notes: 尊重上游完整性请求，按 metadata_only 处理；HLE-Diamond 为 2026-09-22 发布的 1000 题精编子集。
+
+  - id: livecodebench
+    name: LiveCodeBench
+    kind: external_benchmark
+    url: https://github.com/LiveCodeBench/LiveCodeBench
+    access: huggingface
+    license: 代码 MIT；HF 数据集卡标注 license: cc
+    redistribution: metadata_only
+    checked_at: "2026-10-05"
+    notes: 题面聚合自 LeetCode / AtCoder / Codeforces；按版本标签固定（release_v1 … release_v6）。
+
+  - id: swebench-verified
+    name: SWE-bench Verified
+    kind: external_benchmark
+    url: https://huggingface.co/datasets/princeton-nlp/SWE-bench_Verified
+    access: huggingface
+    license: 数据集卡未声明；内容派生自各开源仓库，适用各仓库许可
+    redistribution: local_import
+    checked_at: "2026-10-05"
+    notes: 500 条人工核验样本；字段含 base_commit / patch / test_patch / FAIL_TO_PASS / PASS_TO_PASS。

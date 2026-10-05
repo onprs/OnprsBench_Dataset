@@ -1,0 +1,1 @@
+{"question_content": "（合成示例，非真实赛题）给定整数数组，输出其中位数。本题仅用于适配器测试。", "platform": "examplecode", "question_id": "EX-0001_median", "contest_id": "example-weekly-001", "contest_date": "2026-09-01", "starter_code": "", "difficulty": "easy", "public_test_cases": "[]", "private_test_cases": "[]", "metadata": "{}"}

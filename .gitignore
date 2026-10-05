@@ -1,0 +1,18 @@
+# 维护者本地约定文件，不纳入版本追踪
+AGENTS.md
+
+# 构建产物
+dist/
+build/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# 编辑器与系统
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
