@@ -4,6 +4,20 @@
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-10-05
+
+### 新增
+
+- 新 suite `frontier-swe`（layer: fresh）：真实 GitHub issue + 已合并修复 PR 构成的工程任务
+- 首批 3 个 Fresh SWE 任务，全部经本地完整复现验证（base 上目标测试失败、应用上游修复后通过、相关测试文件无回归）：
+  - `swe-flask-6096-ipv6-partition`（pallets/flask#6093，IPv6 地址解析）
+  - `swe-click-3493-echo-empty-bytes`（pallets/click#3487，空字节串 TypeError）
+  - `swe-click-3769-progressbar-settle`（pallets/click#3571，进度条余量结算）
+- Fresh SWE 采集器 `scripts/collect_fresh_swe.py`（GraphQL 检索 merged PR + 关联 issue + 测试文件，输出暂存区）
+- SWE 任务的程序验证契约 `judge_assets/verify.yaml`（环境、FAIL_TO_PASS、PASS_TO_PASS、复现记录）
+- 许可政策补充：宽松许可仓库（MIT/BSD/Apache）的 issue 与补丁按 redistributable 入库并署名
+- CURATION_GUIDE 增加 Fresh SWE 生产线章节
+
 ## [0.1.0] - 2026-10-05
 
 ### 新增

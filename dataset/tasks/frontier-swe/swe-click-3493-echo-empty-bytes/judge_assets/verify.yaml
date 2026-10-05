@@ -1,0 +1,31 @@
+# 程序验证契约与复现记录
+repo: pallets/click
+repo_url: https://github.com/pallets/click
+base_commit: d42f15b71757de791a5781fb179fd972da9169f5
+fix_pr: https://github.com/pallets/click/pull/3493
+license: BSD-3-Clause
+
+environment:
+  python: "3.14"
+  os_notes: 已在 Windows 11 本机环境验证；仓库为纯 Python，预期跨平台一致
+  setup:
+    - git clone https://github.com/pallets/click
+    - git checkout d42f15b71757de791a5781fb179fd972da9169f5
+    - pip install -e . pytest
+
+evaluation:
+  apply:
+    - judge_assets/test.patch
+  fail_to_pass:
+    - "tests/test_utils.py::test_echo_custom_file"
+  pass_to_pass:
+    - "tests/test_utils.py"
+  reference_fix: judge_assets/fix.patch
+
+verification:
+  verified_at: "2026-10-05"
+  method: 本地完整复现
+  steps:
+    - "base + test.patch：test_echo_custom_file 失败（TypeError: a bytes-like object is required, not 'str'）"
+    - "再应用 fix.patch：目标测试通过"
+    - "回归：tests/test_utils.py 76 项通过、71 项跳过"

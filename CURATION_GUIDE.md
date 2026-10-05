@@ -48,6 +48,15 @@ Source Discovery
 
 高价值任务入库前尽可能完成：来源核实 → 题面评审 → 参考解答评审 → rubric 评审 → 独立可解性评审 → judge 行为测试 → 基线模型运行。每关记录在任务提案（`curation/templates/task-proposal.md`）的对应栏目。
 
-## 5. 数量纪律
+## 5. Fresh SWE 生产线
+
+frontier-swe 任务来自真实 GitHub issue 与已合并修复 PR，答案由真实补丁与测试锚定，禁止人工编造题面或参考答案。
+
+1. **采集**：`python scripts/collect_fresh_swe.py --repo <owner/name> --days <天数> --fetch`，候选落入 `imported/fresh-swe/`（不入库）。筛选条件：有关联 issue、同时修改源码与测试、变更规模可控、仓库许可允许再分发（MIT/BSD/Apache 等）。
+2. **复现验证**（强制）：在 base commit 上应用测试补丁，确认 FAIL_TO_PASS 测试失败；再应用修复补丁，确认通过；运行相关测试文件确认无回归。记录到 `judge_assets/verify.yaml`。
+3. **入库**：拆分 `test.patch` / `fix.patch`；`problem.md` 引用真实 issue 正文并署名；`reference/solution.md` 基于真实 diff 撰写根因与修复分析；`rubric.yaml` 以程序 verifier 为主维度。
+4. **状态**：完成复现验证后至少为 `review`；经独立评审与框架基线运行后转 `active`。
+
+## 6. 数量纪律
 
 不追求任务数量。单道经过完整流程的 frontier 任务价值高于批量生成的低质量任务。禁止使用未经人工审核的批量 LLM 生成题。

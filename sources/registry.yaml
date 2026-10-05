@@ -21,7 +21,27 @@ sources:
     license: 题面权利归平台与作者，未见再分发授权
     redistribution: metadata_only
     checked_at: "2026-10-05"
-    notes: 仅记录 contest id / problem id / 日期 / hash；题面不复制入库。
+    notes: 仅记录 contest id / problem id / 日期 / hash；题面不复制入库。API 不提供题面正文，网页抓取受反爬限制（2026-10-05 实测 403）；题面获取需用户本地人工完成。
+
+  - id: arxiv
+    name: arXiv
+    kind: paper
+    url: https://arxiv.org/
+    access: api
+    license: 各论文适用其页面标注的许可
+    redistribution: metadata_only
+    checked_at: "2026-10-05"
+    notes: 论文作为知识来源；衍生任务的题面与参考解答须为独立创作，source 字段记录具体论文链接。
+
+  - id: github-pallets
+    name: GitHub Pallets 系列仓库（flask / click 等）
+    kind: github_issue
+    url: https://github.com/pallets
+    access: api
+    license: BSD-3-Clause
+    redistribution: redistributable
+    checked_at: "2026-10-05"
+    notes: frontier-swe 首批任务的来源；issue 正文与补丁按仓库许可再分发并署名。
 
   - id: github
     name: GitHub Issues / Pull Requests

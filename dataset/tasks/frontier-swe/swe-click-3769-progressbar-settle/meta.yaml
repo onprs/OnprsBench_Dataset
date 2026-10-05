@@ -1,0 +1,45 @@
+id: swe-click-3769-progressbar-settle
+revision: 1
+title: 修复 click.progressbar 结束时位置显示不回满的问题
+suite: frontier-swe
+type: issue_resolution
+tags:
+  - fresh-swe
+  - click
+  - progressbar
+  - rendering
+lifecycle:
+  status: review
+  stage: fresh
+  superseded_by: null
+  errata: []
+freshness:
+  class: F2
+  created_at: "2026-10-05"
+  source_published_at: "2026-06-08"
+  dataset_release_at: "2026-10-05"
+difficulty:
+  author: medium
+source:
+  kind: github_issue
+  name: pallets/click issue #3571 + PR #3769
+  url: https://github.com/pallets/click/issues/3571
+  published_at: "2026-06-08"
+  license: BSD-3-Clause
+  redistribution: redistributable
+  attribution: Pallets projects（issue 与补丁内容遵循 BSD-3-Clause）
+  upstream_version: null
+  upstream_commit: 8b44edfff7d9a6c895fa804148c16b3a0bc9efb5
+  adapter: null
+contamination:
+  risk: medium
+  source_publication_date: "2026-06-08"
+  exact_problem_public: true
+  reference_public: true
+  transformation: []
+  notes: 修复 PR 于 2026-08-15 合并并公开；污染防护依赖新鲜度与模型训练数据截止时间，评判以程序 verifier（测试）为准。
+license: BSD-3-Clause
+authors:
+  - onprs
+flagship: false
+notes: 本地复现验证记录见 judge_assets/verify.yaml。

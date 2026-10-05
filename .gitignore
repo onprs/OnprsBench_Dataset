@@ -5,6 +5,9 @@ AGENTS.md
 dist/
 build/
 
+# 适配器本地导入暂存区（内容不入库）
+imported/
+
 # Python
 __pycache__/
 *.pyc

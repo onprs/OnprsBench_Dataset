@@ -1,0 +1,45 @@
+rubric_version: 1
+dimensions:
+  - id: patch_correctness
+    weight: 0.60
+    description: 程序 verifier 判定：FAIL_TO_PASS 测试全部通过且 PASS_TO_PASS 无回归。
+    anchors:
+      - score: 0.0
+        description: FAIL_TO_PASS 测试仍失败。
+      - score: 0.5
+        description: FAIL_TO_PASS 通过但 PASS_TO_PASS 出现回归。
+      - score: 1.0
+        description: FAIL_TO_PASS 全部通过且 PASS_TO_PASS 无回归。
+
+  - id: root_cause
+    weight: 0.15
+    description: 修复是否针对根因（用正确的 URL 解析取代对地址字符串的 .partition(":")），而非打补丁式绕过测试。
+    anchors:
+      - score: 0.0
+        description: 通过特判测试输入等方式伪装通过。
+      - score: 0.5
+        description: 只修了两处出错点之一，或用脆弱的字符串处理部分缓解。
+      - score: 1.0
+        description: 两处调用点都采用结构化 URL 解析（如 urlsplit），正确处理 host 与 port。
+
+  - id: minimality
+    weight: 0.10
+    description: 修改范围是否限于必要的源文件，不引入无关重构。
+    anchors:
+      - score: 0.0
+        description: 大量无关改动或重构。
+      - score: 0.5
+        description: 有少量无关改动。
+      - score: 1.0
+        description: 修改集中于出错的两处解析逻辑。
+
+  - id: regression_risk
+    weight: 0.15
+    description: 对边界情形的覆盖：无端口地址、IPv4、localhost、带方括号 IPv6 等既有行为保持不变。
+    anchors:
+      - score: 0.0
+        description: 破坏了既有解析行为。
+      - score: 0.5
+        description: 覆盖了主要边界但存在未考虑的解析差异。
+      - score: 1.0
+        description: 各边界情形行为与修复前一致或更正确。

@@ -1,0 +1,45 @@
+id: swe-click-3493-echo-empty-bytes
+revision: 1
+title: 修复 click.echo 输出空字节串时的 TypeError
+suite: frontier-swe
+type: issue_resolution
+tags:
+  - fresh-swe
+  - click
+  - bytes
+  - type-error
+lifecycle:
+  status: review
+  stage: fresh
+  superseded_by: null
+  errata: []
+freshness:
+  class: F2
+  created_at: "2026-10-05"
+  source_published_at: "2026-05-20"
+  dataset_release_at: "2026-10-05"
+difficulty:
+  author: easy
+source:
+  kind: github_issue
+  name: pallets/click issue #3487 + PR #3493
+  url: https://github.com/pallets/click/issues/3487
+  published_at: "2026-05-20"
+  license: BSD-3-Clause
+  redistribution: redistributable
+  attribution: Pallets projects（issue 与补丁内容遵循 BSD-3-Clause）
+  upstream_version: null
+  upstream_commit: d42f15b71757de791a5781fb179fd972da9169f5
+  adapter: null
+contamination:
+  risk: medium
+  source_publication_date: "2026-05-20"
+  exact_problem_public: true
+  reference_public: true
+  transformation: []
+  notes: 修复 PR 于 2026-05-21 合并并公开；污染防护依赖新鲜度与模型训练数据截止时间，评判以程序 verifier（测试）为准。
+license: BSD-3-Clause
+authors:
+  - onprs
+flagship: false
+notes: 本地复现验证记录见 judge_assets/verify.yaml。

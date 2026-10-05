@@ -1,0 +1,45 @@
+id: swe-flask-6096-ipv6-partition
+revision: 1
+title: 修复 Flask 对 IPv6 地址的错误解析
+suite: frontier-swe
+type: issue_resolution
+tags:
+  - fresh-swe
+  - flask
+  - ipv6
+  - parsing
+lifecycle:
+  status: review
+  stage: fresh
+  superseded_by: null
+  errata: []
+freshness:
+  class: F2
+  created_at: "2026-10-05"
+  source_published_at: "2026-07-13"
+  dataset_release_at: "2026-10-05"
+difficulty:
+  author: medium
+source:
+  kind: github_issue
+  name: pallets/flask issue #6093 + PR #6096
+  url: https://github.com/pallets/flask/issues/6093
+  published_at: "2026-07-13"
+  license: BSD-3-Clause
+  redistribution: redistributable
+  attribution: Pallets projects（issue 与补丁内容遵循 BSD-3-Clause）
+  upstream_version: null
+  upstream_commit: 514fc6b3e8402e4c646d5284e97a4f0ab50a7c4b
+  adapter: null
+contamination:
+  risk: medium
+  source_publication_date: "2026-07-13"
+  exact_problem_public: true
+  reference_public: true
+  transformation: []
+  notes: 修复 PR 于 2026-08-11 合并并公开；污染防护依赖新鲜度与模型训练数据截止时间，评判以程序 verifier（测试）为准。
+license: BSD-3-Clause
+authors:
+  - onprs
+flagship: false
+notes: 本地复现验证记录见 judge_assets/verify.yaml（base 上目标测试失败，应用修复后全部通过）。

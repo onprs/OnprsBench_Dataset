@@ -1,0 +1,9 @@
+id: frontier-swe
+name: Fresh Software Engineering Tasks
+description: 真实 GitHub issue 与已合并修复 PR 构成的工程任务：冻结修复前仓库状态，judge 侧持有真实补丁与测试，由程序 verifier 判分。
+layer: fresh
+adapter: null
+tasks:
+  - swe-flask-6096-ipv6-partition
+  - swe-click-3493-echo-empty-bytes
+  - swe-click-3769-progressbar-settle

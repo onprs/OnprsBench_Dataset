@@ -15,7 +15,7 @@
 ```
 dataset/            数据内容（suites + tasks，构建产物 manifest 描述全部数据）
 schemas/            Dataset Protocol 的 JSON Schema
-scripts/            校验（validate.py）与构建（build.py）工具
+scripts/            校验（validate.py）、构建（build.py）与 Fresh SWE 采集（collect_fresh_swe.py）
 adapters/           外部基准适配器（上游元数据 + 转换原型）
 sources/            数据来源注册表（许可与再分发策略）
 curation/           任务生产模板与评审清单

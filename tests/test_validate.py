@@ -31,6 +31,24 @@ class ValidateRepoTest(unittest.TestCase):
         self.assertEqual(bundle_sha256(hashes), bundle_sha256(dict(reversed(list(hashes.items())))))
         self.assertNotEqual(bundle_sha256(hashes), bundle_sha256({"a.txt": "0" * 64}))
 
+    def test_swe_tasks_have_verification_contract(self):
+        """frontier-swe 任务必须带程序验证契约（FAIL_TO_PASS + 复现记录）。"""
+        import yaml
+
+        swe_root = ROOT / "dataset" / "tasks" / "frontier-swe"
+        if not swe_root.is_dir():
+            self.skipTest("无 frontier-swe 任务")
+        for task_dir in swe_root.iterdir():
+            if not task_dir.is_dir():
+                continue
+            verify_path = task_dir / "judge_assets" / "verify.yaml"
+            self.assertTrue(verify_path.exists(), f"{task_dir.name} 缺少 verify.yaml")
+            verify = yaml.safe_load(verify_path.read_text(encoding="utf-8"))
+            self.assertTrue(verify["evaluation"]["fail_to_pass"], task_dir.name)
+            self.assertTrue(verify["evaluation"]["pass_to_pass"], task_dir.name)
+            self.assertTrue(verify["verification"]["verified_at"], task_dir.name)
+            self.assertTrue(verify["base_commit"], task_dir.name)
+
 
 class BrokenRepoTest(unittest.TestCase):
     """在临时目录构造损坏仓库，校验器必须检出错误。"""

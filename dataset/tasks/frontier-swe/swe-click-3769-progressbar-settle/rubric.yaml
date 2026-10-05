@@ -1,0 +1,34 @@
+rubric_version: 1
+dimensions:
+  - id: patch_correctness
+    weight: 0.60
+    description: 程序 verifier 判定：FAIL_TO_PASS（含全部参数化用例）通过且 PASS_TO_PASS 无回归。
+    anchors:
+      - score: 0.0
+        description: FAIL_TO_PASS 测试仍失败。
+      - score: 0.5
+        description: FAIL_TO_PASS 通过但 PASS_TO_PASS 出现回归。
+      - score: 1.0
+        description: FAIL_TO_PASS 全部通过且 PASS_TO_PASS 无回归。
+
+  - id: root_cause
+    weight: 0.20
+    description: 修复是否针对根因——`update_min_steps` 使不足一个步距的进度余量滞留在 `_completed_intervals` 中，结束时未结算；修复应在收尾渲染前把余量结算进 `pos`。
+    anchors:
+      - score: 0.0
+        description: 只在显示层把数字截断/钳制到 length，余量仍未结算。
+      - score: 0.5
+        description: 结算了余量但破坏了 `update_min_steps` 的正常节流语义（如每次迭代都渲染）。
+      - score: 1.0
+        description: 在 render_finish 收尾时结算滞留余量并刷新渲染，不改变正常运行期的节流行为。
+
+  - id: regression_risk
+    weight: 0.20
+    description: 其他渲染路径（hidden、非 tty、百分比格式、无限长进度条等）行为不回归。
+    anchors:
+      - score: 0.0
+        description: 破坏了其他进度条模式。
+      - score: 0.5
+        description: 主路径正确但个别模式行为变化。
+      - score: 1.0
+        description: 各模式行为与上游修复一致（上游修复后 tests/test_termui.py 249 项通过）。
