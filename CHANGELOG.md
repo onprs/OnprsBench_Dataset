@@ -4,6 +4,18 @@
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-10-06
+
+### 修复
+
+- frontier-algorithm 两个竞赛任务（`fa-cf2269c-k-important`、`fa-cf2269d-xor-even-parity`）的 verify.yaml：`evaluation.reference_solution` 由描述文本修正为机器可读路径，并显式声明 `samples` 路径；判定语义不变（revision 2）
+
+### 新增
+
+- `schemas/verify.schema.json`：程序判定契约（verify.yaml）的 JSON Schema，覆盖工程修复与竞赛代码两类契约；`scripts/validate.py` 对 verify.yaml 做 schema 校验并检查契约引用文件存在
+- PROTOCOL.md 新增程序判定契约（第 8 节）、Solver 输出契约（第 9 节）与框架环境义务（第 10 节）
+
+
 ## [0.3.0] - 2026-10-05
 
 ### 新增

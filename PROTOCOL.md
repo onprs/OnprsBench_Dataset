@@ -121,7 +121,69 @@ dimensions:
 
 flagship / canary 任务必须提供 anchor answers（建议 0 / 25 / 50 / 75 / 100 五档），存放于 `anchors/`（judge 可见），用于 judge 校准、judge 一致性测试与 rubric 验证。普通任务可选。
 
-## 8. 元数据（meta.yaml）
+## 8. 程序判定契约（verify.yaml）
+
+需要程序判定的任务在 `judge_assets/verify.yaml` 中声明机器可执行的判定契约（schema 见 `schemas/verify.schema.json`）。框架据此自动准备环境并执行判定，产出判定事实（Verifier Facts）供 judge 使用。当前定义两类契约：
+
+### 8.1 工程修复任务（issue_resolution）
+
+```yaml
+repo: pallets/click                 # GitHub owner/repo
+repo_url: https://github.com/pallets/click
+base_commit: <sha>                  # 修复前仓库状态
+environment:
+  python: "3.14"                    # 判定环境 Python 版本
+  setup:                            # 仓库内依赖安装步骤（框架在自带解释器的 venv 中执行；
+    - pip install -e . pytest       #   git clone/checkout 步骤由框架快照供给替代）
+evaluation:
+  apply: [judge_assets/test.patch]  # 判定时由框架应用的测试补丁
+  fail_to_pass: [tests/test_utils.py::test_xxx]   # 修复后必须通过
+  pass_to_pass: [tests/test_utils.py]             # 不得回归
+  reference_fix: judge_assets/fix.patch           # 参考修复（数据集自验用）
+```
+
+判定事实：`patch_applied`（solver 补丁能否应用）、`fail_to_pass` 逐项结果、`pass_to_pass` 汇总、日志摘要。凡 rubric 维度声明"程序 verifier 判定"的，judge 必须以判定事实为唯一依据打分。
+
+### 8.2 竞赛代码任务（code_generation）
+
+```yaml
+source:
+  limits: { time: "2s", memory: "256MB" }   # 题目时限（框架按语言放宽解释型语言）
+evaluation:
+  mode: 程序判题
+  reference_solution: judge_assets/reference_solution.cpp   # 期望输出来源（相对任务根路径）
+  samples: judge_assets/samples.json          # 官方样例 [{input, output}]
+  harness:
+    generator: judge_assets/generator.py      # 用法：python generator.py <seed> <用例数>
+    brute_force: judge_assets/brute_force.py  # 数据集自验对拍用，框架判定不依赖
+```
+
+判定流程：编译/解释运行 solver 代码 → 官方样例回归 → 生成器应力测试（期望输出由参考解计算）→ 记录通过与失败用例。`verify.yaml` 中的 `source` / `local_import` / `archived_content` / `verification` 段为溯源与复现记录，框架不执行。
+
+## 9. Solver 输出契约
+
+协议不约束 solver 的内部思考过程，但程序判定类任务要求 solver 的最终回答包含可提取的产物。框架按任务类型在 solver prompt 中声明输出格式：
+
+| 任务类型 | 约定产物 |
+| --- | --- |
+| `issue_resolution` | 单个 ```diff 围栏内的 unified diff 补丁（git 风格，`a/`、`b/` 前缀），只改源码、不改测试 |
+| `code_generation` / `implementation` | 单个 ```cpp 或 ```python 围栏内的完整程序（标准输入读入、标准输出写出） |
+| 其他 | 直接文本回答 |
+
+提取失败时判定事实记录 `patch_applied=false` / `code_extracted=false`，judge 按 anchors 对相应维度打 0 档。数据集作者在 problem.md 中写明任务要求即可，输出格式由框架 prompt 统一声明。
+
+## 10. 框架环境义务
+
+程序判定所需环境由框架自动供给，不要求用户预装：
+
+- Python 解释器与依赖：框架自动下载独立 Python 构建并创建虚拟环境，按 `environment.python` 供给。
+- 仓库快照：框架按 `repo_url` + `base_commit` 下载源码归档（GitHub tarball），本地缓存，不依赖用户安装 git。
+- C/C++ 编译器：优先使用系统编译器；Windows 上缺失时自动下载便携 MinGW；无法供给时该任务判定降级为"不可用"，judge 仅依据文本证据评分并在结果中标注。
+- 补丁应用：框架内置 unified diff 应用能力。
+
+全部判定产物（补丁应用结果、测试输出、耗时、工具链版本）属于 Run 的原始事实，框架必须落库保存。
+
+## 11. 元数据（meta.yaml）
 
 必填字段由 `schemas/task.schema.json` 定义，核心包括：
 
@@ -135,11 +197,11 @@ flagship / canary 任务必须提供 anchor answers（建议 0 / 25 / 50 / 75 / 
 
 经验难度与区分度由框架根据真实运行结果计算，作为独立 analysis artifact 回流；数据集仓库接收此类产物时单独存放，不覆盖 `meta.yaml`。
 
-## 9. 外部任务接入
+## 12. 外部任务接入
 
 外部基准通过 `adapters/` 接入，adapter 负责把上游格式转换为本协议。adapter 元数据记录 `upstream`（名称、主页、许可、再分发策略、版本/commit 固定方式）与 `adapter.version`。上游更新时升级 adapter 并重放转换，禁止 fork 整个外部数据集进本仓库。再分发策略分级见 LICENSING.md。
 
-## 10. 稳定性承诺
+## 13. 稳定性承诺
 
 - 已发布（进入任一 release）的任务内容不可原地修改；修正错误通过 errata 记录 + `revision + 1` + 新数据集版本发布。
 - 被替代的任务标记 `status: superseded` 并填写 `superseded_by`。

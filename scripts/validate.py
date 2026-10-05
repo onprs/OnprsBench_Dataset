@@ -57,6 +57,7 @@ def validate_repository(root: Path | None = None) -> list[str]:
     suite_schema = load_schema("suite.schema.json")
     task_schema = load_schema("task.schema.json")
     rubric_schema = load_schema("rubric.schema.json")
+    verify_schema = load_schema("verify.schema.json")
 
     def check_schema(schema: dict, data, label: str) -> None:
         validator = Draft202012Validator(schema, format_checker=fmt)
@@ -130,6 +131,25 @@ def validate_repository(root: Path | None = None) -> list[str]:
             dim_ids = [d.get("id") for d in dims]
             if len(set(dim_ids)) != len(dim_ids):
                 errors.append(f"{label}/rubric.yaml: 维度 id 重复")
+
+        # 程序判定契约（可选）：verify.yaml 存在时必须符合 schema
+        verify_path = task_dir / "judge_assets" / "verify.yaml"
+        if verify_path.exists():
+            verify = load_yaml(verify_path)
+            check_schema(verify_schema, verify, f"{label}/judge_assets/verify.yaml")
+            # 契约引用的文件必须存在
+            evaluation = verify.get("evaluation", {})
+            referenced = list(evaluation.get("apply") or [])
+            for key in ("reference_fix", "reference_solution", "samples"):
+                if evaluation.get(key):
+                    referenced.append(evaluation[key])
+            harness = evaluation.get("harness") or {}
+            for key in ("generator", "brute_force"):
+                if harness.get(key):
+                    referenced.append(harness[key])
+            for rel in referenced:
+                if not (task_dir / rel).is_file():
+                    errors.append(f"{label}/judge_assets/verify.yaml: 契约引用的文件不存在: {rel}")
 
         lifecycle = meta.get("lifecycle", {})
         if lifecycle.get("status") == "superseded" and not lifecycle.get("superseded_by"):

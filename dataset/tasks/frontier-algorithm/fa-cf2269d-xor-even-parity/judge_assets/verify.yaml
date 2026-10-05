@@ -29,10 +29,11 @@ local_import:
 
 evaluation:
   mode: 程序判题
-  reference_solution: 本地导入的 official.cpp（官方题解代码，judge 侧锚点）
-  tests:
-    - 官方样例（samples.json）
-    - 应力测试：generator.py 生成，期望输出由 reference_solution 计算
+  # 判定期望输出来源（编译后运行），路径相对任务根
+  reference_solution: judge_assets/reference_solution.cpp
+  # 官方样例 [{input, output}]，路径相对任务根
+  samples: judge_assets/samples.json
+  # 应力测试：generator.py 生成输入，期望输出由 reference_solution 计算
   harness:
     generator: judge_assets/generator.py
     brute_force: judge_assets/brute_force.py

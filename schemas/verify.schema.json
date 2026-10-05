@@ -1,0 +1,107 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://onprs.github.io/schemas/verify.schema.json",
+  "title": "OnprsBench Dataset Verify Contract",
+  "description": "单个任务 judge_assets/verify.yaml 的 schema（Dataset Protocol v1 第 8 节程序判定契约）。evaluation 段为机器可执行的判定契约；source / local_import / archived_content / verification 段为溯源与复现记录，框架不执行。",
+  "type": "object",
+  "required": ["evaluation"],
+  "additionalProperties": false,
+  "properties": {
+    "repo": { "type": "string", "description": "GitHub owner/repo（SWE 形契约）" },
+    "repo_url": { "type": "string" },
+    "base_commit": { "type": "string", "description": "判定基准 commit（修复前状态）" },
+    "fix_pr": { "type": ["string", "null"] },
+    "license": { "type": "string" },
+    "environment": {
+      "type": "object",
+      "required": ["python"],
+      "additionalProperties": false,
+      "properties": {
+        "python": { "type": "string", "description": "判定环境 Python 版本，如 \"3.14\"" },
+        "os_notes": { "type": "string" },
+        "setup": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "仓库内依赖安装步骤（框架在自带解释器的 venv 中执行；git clone/checkout 步骤由框架快照供给替代）"
+        }
+      }
+    },
+    "evaluation": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "mode": { "type": "string" },
+        "apply": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "判定时由框架应用的测试补丁（相对任务根路径）"
+        },
+        "fail_to_pass": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "修复后必须通过的 pytest nodeid 列表"
+        },
+        "pass_to_pass": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "不得回归的 pytest 目标（文件或 nodeid）"
+        },
+        "reference_fix": { "type": ["string", "null"], "description": "参考修复补丁路径（数据集自验用）" },
+        "reference_solution": { "type": "string", "description": "竞赛判定参考解路径（相对任务根），期望输出来源" },
+        "samples": { "type": "string", "description": "官方样例 JSON 路径（[{input, output}]）" },
+        "harness": {
+          "type": "object",
+          "required": ["generator"],
+          "additionalProperties": false,
+          "properties": {
+            "generator": { "type": "string", "description": "应力测试生成器路径；用法：python generator.py <seed> <用例数>" },
+            "brute_force": { "type": ["string", "null"] }
+          }
+        }
+      }
+    },
+    "source": {
+      "type": "object",
+      "description": "竞赛题来源与约束（溯源用）",
+      "additionalProperties": true,
+      "properties": {
+        "limits": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "time": { "type": "string" },
+            "memory": { "type": "string" }
+          }
+        }
+      }
+    },
+    "redistribution": { "type": "string" },
+    "archived_content": { "type": "object", "additionalProperties": true },
+    "local_import": { "type": "object", "additionalProperties": true },
+    "verification": {
+      "type": "object",
+      "description": "数据集维护侧的复现验证记录（非机器契约）",
+      "required": ["verified_at", "method"],
+      "additionalProperties": true,
+      "properties": {
+        "verified_at": { "type": "string" },
+        "method": { "type": "string" }
+      }
+    }
+  },
+  "anyOf": [
+    {
+      "title": "工程修复契约（issue_resolution）",
+      "required": ["repo", "base_commit", "environment"],
+      "properties": {
+        "evaluation": { "required": ["apply", "fail_to_pass", "pass_to_pass"] }
+      }
+    },
+    {
+      "title": "竞赛代码契约（code_generation）",
+      "properties": {
+        "evaluation": { "required": ["reference_solution", "harness"] }
+      }
+    }
+  ]
+}
