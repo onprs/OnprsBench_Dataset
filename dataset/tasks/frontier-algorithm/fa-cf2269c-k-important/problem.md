@@ -1,22 +1,57 @@
-# Codeforces Round 1124 (Div. 2) C — K Is Important
+# K Is Important
 
-本任务以 metadata_only 方式接入：题面不入库（权利归 Codeforces 与作者）。
+> 来源：Codeforces Round 1124 (Div. 2) Problem C（2026-09-26），https://codeforces.com/contest/2269/problem/C
+> 权利归 Codeforces 与原作者所有；按研究基准惯例收录并署名（见 LICENSING.md "research_archive"）。
+> 限制：2 秒 / 256 MB；rating 1200。
 
-## 来源元数据
+## 题面
 
-- 题目：https://codeforces.com/contest/2269/problem/C
-- 比赛：Codeforces Round 1124 (Div. 2)，2026-09-26
-- 难度评级：1200；标签：constructive algorithms, greedy, two pointers
-- 限制：2 秒 / 256 MB
+You are given an array $a$ consisting of $n$ positive integers, as well as an integer parameter $k$.
 
-## 本地导入题面
+While the array has at least $k$ elements, you need to perform one of the following two types of operations on $a$:
 
-```bash
-python scripts/import_cf_task.py --contest 2269 --index C
+- Remove $a_k$ and add its value to your score, or
+- Remove $a_{m-k+1}$ and add its value to your score, where $m$ is the length of $a$ before this operation.
+
+After removing an element, the remaining elements keep their relative order.
+
+Your task is to determine the maximum possible score that can be obtained.
+
+## 输入
+
+Each test contains multiple test cases. The first line contains the number of test cases $t$ ($1 \le t \le 10^4$). The description of the test cases follows.
+
+The first line of each test case contains two integers $n$ and $k$ ($1 \le k \le n \le 10^5$) — the length of $a$ and the parameter.
+
+The second line contains $n$ integers $a_i$ ($1 \le a_i \le 10^9$) — the elements of $a$.
+
+It is guaranteed that the sum of $n$ over all test cases does not exceed $10^5$.
+
+## 输出
+
+For each test case, output a single integer — the maximum score that can be obtained.
+
+## 样例
+
+输入：
+
+```text
+4
+4 2
+1 2 3 4
+4 4
+3 4 1 2
+1 1
+1
+6 3
+1 4 8 2 6 3
 ```
 
-导入产物（`imported/cf/2269c/`）：`statement.txt`（题面）、`samples.json`（官方样例）、`editorial.txt`（官方题解）、`official.cpp`（官方参考代码，judge 侧参考解答）。文件 hash 见 `judge_assets/verify.yaml`，用于核对导入完整性。
+输出：
 
-## 评判
-
-由程序 verifier 判分：官方样例 + 生成器应力测试（期望输出由官方参考代码产生）。见 `rubric.yaml` 与 `judge_assets/verify.yaml`。
+```text
+9
+3
+1
+19
+```

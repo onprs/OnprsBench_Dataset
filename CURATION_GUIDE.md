@@ -62,9 +62,9 @@ frontier-swe 任务来自真实 GitHub issue 与已合并修复 PR，答案由�
 竞赛任务锚定真实题目，禁止人工改写题面或自写参考解答充当标准答案。
 
 1. **选题**：近期比赛、难度有区分度；通过 Codeforces API 获取元数据（contest id、index、rating、tags、日期）。
-2. **导入**：`python scripts/import_cf_task.py --contest <id> --index <题号>`，本地获得题面、官方题解与官方参考代码（不入库）。
+2. **导入**：`python scripts/import_cf_task.py --contest <id> --index <题号>`，获得题面、官方题解与官方参考代码。
 3. **对拍验证**（强制）：编写 `judge_assets/generator.py`（随机用例）与 `judge_assets/brute_force.py`（暴力基准），与官方参考代码对拍（小规模数百例），并回归官方样例；结果记入 `judge_assets/verify.yaml`。
-4. **入库**：仓库只保存元数据、hash、rubric 与验证契约；题面与题解由使用者本地导入。
+4. **归档入库**：题面整理为 `problem.md`（保留原意，修复排版），题解原文入 `reference/editorial.md`，官方代码入 `judge_assets/reference_solution.cpp`，样例入 `judge_assets/samples.json`；全部署名并记录上游 hash（research_archive，见 LICENSING.md）。
 
 ## 7. 数量纪律
 

@@ -18,10 +18,10 @@ sources:
     kind: contest
     url: https://codeforces.com/
     access: api
-    license: 题面权利归平台与作者，未见再分发授权
-    redistribution: metadata_only
+    license: 题面权利归平台与作者，未见显式再分发授权
+    redistribution: research_archive
     checked_at: "2026-10-05"
-    notes: 仅记录 contest id / problem id / 日期 / hash；题面与题解不复制入库。API 不提供题面正文；公开网页以浏览器 UA 可读（2026-10-05 实测，匿名脚本 UA 会被 403）；通过 scripts/import_cf_task.py 在本地下载。
+    notes: 研究基准收录先例存在（code_contests、LiveCodeBench）；按 research_archive 归档题面/题解/官方代码并署名，记录上游 hash，权利方异议即下架。API 不提供题面正文；公开网页以浏览器 UA 可读（2026-10-05 实测）；抓取用 scripts/import_cf_task.py。
 
   - id: arxiv
     name: arXiv

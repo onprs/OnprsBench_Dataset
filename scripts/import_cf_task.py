@@ -1,11 +1,9 @@
 """Codeforces 任务本地导入器（metadata_only 模式）。
 
 在维护者本机运行：抓取指定题目的题面与官方题解（含官方参考代码），
-写入 imported/cf/<contest><index>/ 暂存区，并打印各文件 sha256 供
-任务包 judge_assets/verify.yaml 核对。抓取内容不入库、不提交。
-
-题面与题解的权利归 Codeforces 与原作者；本工具仅做本地下载与整理，
-不得用于再分发。
+写入 imported/cf/<contest><index>/ 暂存区，并打印各文件 sha256。
+题库内容按 research_archive 政策归档入库（署名 + 上游 hash，见 LICENSING.md）；
+本工具用于首次获取与后续核对上游内容是否变动。
 
 用法：
     python scripts/import_cf_task.py --contest 2269 --index C

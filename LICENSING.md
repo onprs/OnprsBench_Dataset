@@ -19,6 +19,7 @@
 | `redistributable` | 许可明确允许再分发 | 内容本体 + 署名信息 |
 | `metadata_only` | 上游要求不公开再分发，或许可不明确 | 仅 source 元数据、URL、ID、日期、内容 hash |
 | `local_import` | 内容可由用户自行合法获取，但仓库不分发 | 元数据 + importer；用户本地执行导入 |
+| `research_archive` | 无显式再分发授权，但研究基准收录有先例（如 code_contests、LiveCodeBench 收录 Codeforces 题面） | 内容本体 + 署名 + 上游 hash；权利方异议即下架并转为 metadata_only |
 
 ## 3. 当前外部来源的核实结论
 
@@ -27,7 +28,7 @@
 - **HLE / HLE-Diamond**（`cais/hle`，MIT）：上游明确要求不要公开分享、转传或分发数据集内容，以保护基准完整性。尽管许可为 MIT，本仓库按 `metadata_only` 处理。
 - **LiveCodeBench**（代码 MIT；HF 数据集卡标注 `license: cc`）：题面聚合自 LeetCode / AtCoder / Codeforces，平台题面的再分发权利不清晰。按 `metadata_only` 处理，题面由用户本地导入。
 - **SWE-bench Verified**（`princeton-nlp/SWE-bench_Verified`）：数据集卡未声明许可；记录内容派生自各开源仓库，适用各仓库自身许可。按 `local_import` 处理。
-- **Codeforces**：API 不提供题面正文；公开网页在浏览器 UA 下可读（2026-10-05 实测），但未见任何再分发授权。题面、官方题解与官方代码一律按 `metadata_only` 处理：仓库存元数据、hash 与导入器，内容由用户本地获取。
+- **Codeforces**：API 不提供题面正文；公开网页在浏览器 UA 下可读（2026-10-05 实测），未见显式再分发授权。研究基准收录其题面有先例（DeepMind code_contests、LiveCodeBench 均含 Codeforces 题面）。按 `research_archive` 处理：题面、官方题解与官方代码随署名入库，记录上游 hash；一旦权利方提出异议，立即下架并转为 metadata_only。
 - **Fresh SWE 自采内容**（frontier-swe）：issue 正文与补丁文本来自许可宽松的仓库（当前为 BSD-3-Clause 的 pallets 系列），适用仓库许可、允许再分发。按 `redistributable` 处理并署名；仅对许可明确的仓库开放此通道，其余仍按 `local_import`。
 
 ## 4. 每个来源 / 任务必须记录

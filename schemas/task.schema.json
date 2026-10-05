@@ -87,7 +87,7 @@
         "url": { "type": ["string", "null"] },
         "published_at": { "type": ["string", "null"], "format": "date" },
         "license": { "type": "string", "minLength": 1 },
-        "redistribution": { "type": "string", "enum": ["redistributable", "metadata_only", "local_import"] },
+        "redistribution": { "type": "string", "enum": ["redistributable", "metadata_only", "local_import", "research_archive"] },
         "attribution": { "type": "string", "minLength": 1 },
         "upstream_version": { "type": ["string", "null"] },
         "upstream_commit": { "type": ["string", "null"] },

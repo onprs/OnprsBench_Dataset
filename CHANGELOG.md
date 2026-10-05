@@ -11,7 +11,8 @@
 - frontier-algorithm 首批 2 个真实竞赛任务（Codeforces Round 1124 Div.2，2026-09-26，新鲜度 F1）
   - `fa-cf2269c-k-important`（rating 1200）
   - `fa-cf2269d-xor-even-parity`（rating 1500）
-- Codeforces 本地导入器 `scripts/import_cf_task.py`（题面 / 官方题解 / 官方参考代码的本地下载与 hash 核对，内容不入库）
+- Codeforces 本地导入器 `scripts/import_cf_task.py`（题面 / 官方题解 / 官方参考代码的本地下载与 hash 核对）
+- 竞赛任务内容按 research_archive 政策归档入库：题面（problem.md）、官方题解（reference/editorial.md）、官方参考代码（judge_assets/reference_solution.cpp）、官方样例（judge_assets/samples.json），均署名并记录上游 hash
 - 竞赛任务对拍验证工具（生成器 + 暴力基准，judge_assets/）：官方参考代码已与暴力完成对拍（C 题 500 例、D 题 300 例，另均通过官方样例）
 
 ### 改进

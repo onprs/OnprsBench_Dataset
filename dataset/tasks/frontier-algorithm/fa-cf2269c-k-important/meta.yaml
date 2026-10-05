@@ -25,8 +25,8 @@ source:
   name: Codeforces Round 1124 (Div. 2) Problem C
   url: https://codeforces.com/contest/2269/problem/C
   published_at: "2026-09-26"
-  license: 题面与题解权利归 Codeforces 与原作者，未见再分发授权
-  redistribution: metadata_only
+  license: 题面与题解归 Codeforces 与原作者所有，按研究基准收录（署名，权利方可要求下架）
+  redistribution: research_archive
   attribution: Codeforces Round 1124 (Div. 2)；题解作者 eren__
   upstream_version: 比赛 2269 / 官方题解 blog entry 157140
   upstream_commit: null
@@ -38,7 +38,7 @@ contamination:
   reference_public: true
   transformation: []
   notes: 题面与官方题解均公开；污染防护依赖新鲜度（F1，比赛后 9 天入库）。评判完全由程序 verifier 完成，不依赖文本比对。
-license: 元数据与校验代码 CC BY 4.0 / MIT；题面与题解不入库
+license: 题面/题解归 Codeforces 与作者（研究基准收录）；任务包装与校验代码 CC BY 4.0 / MIT
 authors:
   - onprs
 flagship: false
