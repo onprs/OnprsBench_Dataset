@@ -1,0 +1,37 @@
+# 程序验证契约与复现记录
+repo: sympy/sympy
+repo_url: https://github.com/sympy/sympy
+base_commit: e0e25c8eaab46155ee7c35c783e3f6f41e147b9b
+fix_pr: https://github.com/sympy/sympy/pull/30396
+license: BSD-3-Clause
+
+environment:
+  python: "3.14"
+  os_notes: 已在 Windows 11 本机环境验证；仓库为纯 Python，测试需 numpy
+  setup:
+    - git clone https://github.com/sympy/sympy
+    - git checkout e0e25c8eaab46155ee7c35c783e3f6f41e147b9b
+    - pip install -e . pytest hypothesis numpy
+
+evaluation:
+  # 评测时序：base_commit -> 应用 test.patch -> 被测模型修复源码 -> 运行测试
+  apply:
+    - judge_assets/test.patch
+  fail_to_pass:
+    - "sympy/printing/tests/test_numpy.py::test_issue_30395_scalar_assignment"
+    - "sympy/printing/tests/test_pycode.py::test_array_printer"
+    - "sympy/printing/tests/test_tensorflow.py::test_tensorflow_elementwise_apply_func"
+    - "sympy/tensor/array/expressions/tests/test_convert_indexed_to_array.py::test_convert_indexed_to_array_scalars_stay_scalars"
+  pass_to_pass:
+    - "sympy/printing/tests/test_numpy.py"
+    - "sympy/printing/tests/test_pycode.py"
+    - "sympy/printing/tests/test_tensorflow.py"
+    - "sympy/tensor/array/expressions/tests/test_convert_indexed_to_array.py"
+  reference_fix: judge_assets/fix.patch
+
+verification:
+  verified_at: "2026-10-06"
+  method: 本地完整复现
+  steps:
+    - "base + test.patch：4 个测试文件合计 4 项失败、66 项通过、7 项跳过"
+    - "再应用 fix.patch：4 个测试文件合计 70 项通过、7 项跳过"

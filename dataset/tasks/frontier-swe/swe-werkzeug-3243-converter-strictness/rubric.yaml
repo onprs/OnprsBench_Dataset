@@ -1,0 +1,34 @@
+rubric_version: 1
+dimensions:
+  - id: patch_correctness
+    weight: 0.60
+    description: 程序 verifier 判定：FAIL_TO_PASS 测试通过且 PASS_TO_PASS 无回归。
+    anchors:
+      - score: 0.0
+        description: FAIL_TO_PASS 测试仍失败。
+      - score: 0.5
+        description: FAIL_TO_PASS 通过但 PASS_TO_PASS 出现回归。
+      - score: 1.0
+        description: FAIL_TO_PASS 通过且 PASS_TO_PASS 无回归。
+
+  - id: root_cause
+    weight: 0.20
+    description: 修复是否覆盖转换器的接受域与构建两个方向——拒绝非 ASCII 数字、float 溢出为 inf 的取值；`fixed_digits` 不计负号；`to_url` 对越界、负数（未开启 signed）、inf/nan 报错且不输出科学计数法。
+    anchors:
+      - score: 0.0
+        description: 只调整正则或只在解析侧处理部分取值，构建侧仍不校验。
+      - score: 0.5
+        description: 修复了多数取值但遗留一项（如仅处理 Unicode 数字，或 fixed_digits 仍把负号计入，或 to_url 仍会输出科学计数法）。
+      - score: 1.0
+        description: 解析与构建两侧的全部已知缺陷均被正确处理，且行为与语义文档一致。
+
+  - id: regression_risk
+    weight: 0.20
+    description: 既有合法 URL 的匹配与构建保持：前导零、`-0.0`、极小数、`min`/`max` 边界、普通浮点字符串不做多余改动。
+    anchors:
+      - score: 0.0
+        description: 常见合法取值被拒绝或构建出的 URL 改变语义。
+      - score: 0.5
+        description: 主要取值正确，个别边界（如极小数、大整数、负数零）行为变化。
+      - score: 1.0
+        description: 全部既有合法取值与上游修复行为一致。

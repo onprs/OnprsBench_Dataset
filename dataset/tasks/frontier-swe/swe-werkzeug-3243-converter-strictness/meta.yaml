@@ -1,0 +1,46 @@
+id: swe-werkzeug-3243-converter-strictness
+revision: 1
+title: 修复 Werkzeug 的 int/float URL 转换器接受非法取值的问题
+suite: frontier-swe
+type: issue_resolution
+tags:
+  - fresh-swe
+  - werkzeug
+  - routing
+  - url-converter
+  - validation
+lifecycle:
+  status: review
+  stage: fresh
+  superseded_by: null
+  errata: []
+freshness:
+  class: F2
+  created_at: "2026-10-06"
+  source_published_at: "2026-08-19"
+  dataset_release_at: "2026-10-06"
+difficulty:
+  author: hard
+source:
+  kind: github_issue
+  name: pallets/werkzeug issue #3242 + PR #3243
+  url: https://github.com/pallets/werkzeug/issues/3242
+  published_at: "2026-08-19"
+  license: BSD-3-Clause
+  redistribution: redistributable
+  attribution: Pallets projects（issue 与补丁内容遵循 BSD-3-Clause）
+  upstream_version: null
+  upstream_commit: ef518e429b67a91a307de37a1845c93110180371
+  adapter: null
+contamination:
+  risk: medium
+  source_publication_date: "2026-08-19"
+  exact_problem_public: true
+  reference_public: true
+  transformation: []
+  notes: issue 与修复 PR 均公开；评判以程序 verifier（tests/test_routing.py）为准，不依赖题面文本。
+license: BSD-3-Clause
+authors:
+  - onprs
+flagship: false
+notes: 本地复现验证记录见 judge_assets/verify.yaml。

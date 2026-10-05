@@ -1,0 +1,46 @@
+id: swe-urllib3-5254-http2-probe-lock
+revision: 1
+title: 修复 HTTP/2 探测缓存中等待线程返回后不释放锁的问题
+suite: frontier-swe
+type: issue_resolution
+tags:
+  - fresh-swe
+  - urllib3
+  - http2
+  - concurrency
+  - locking
+lifecycle:
+  status: review
+  stage: fresh
+  superseded_by: null
+  errata: []
+freshness:
+  class: F2
+  created_at: "2026-10-06"
+  source_published_at: "2026-09-03"
+  dataset_release_at: "2026-10-06"
+difficulty:
+  author: hard
+source:
+  kind: github_issue
+  name: urllib3/urllib3 issue #5206 + PR #5254
+  url: https://github.com/urllib3/urllib3/issues/5206
+  published_at: "2026-09-03"
+  license: MIT
+  redistribution: redistributable
+  attribution: urllib3 contributors（issue 与补丁内容遵循 MIT）
+  upstream_version: null
+  upstream_commit: bcf84e6815f623521e1ffe3e6ab0224d778929c0
+  adapter: null
+contamination:
+  risk: medium
+  source_publication_date: "2026-09-03"
+  exact_problem_public: true
+  reference_public: true
+  transformation: []
+  notes: issue 与修复 PR 均公开；评判以程序 verifier（test/test_http2_probe.py 等）为准，不依赖题面文本。
+license: MIT
+authors:
+  - onprs
+flagship: false
+notes: 本地复现验证记录见 judge_assets/verify.yaml。

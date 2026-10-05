@@ -1,0 +1,34 @@
+rubric_version: 1
+dimensions:
+  - id: patch_correctness
+    weight: 0.60
+    description: 程序 verifier 判定：FAIL_TO_PASS 测试通过且 PASS_TO_PASS 无回归。
+    anchors:
+      - score: 0.0
+        description: FAIL_TO_PASS 测试仍失败。
+      - score: 0.5
+        description: FAIL_TO_PASS 通过但 PASS_TO_PASS 出现回归。
+      - score: 1.0
+        description: FAIL_TO_PASS 通过且 PASS_TO_PASS 无回归。
+
+  - id: root_cause
+    weight: 0.20
+    description: 修复是否针对 `_is_class_var` 的输入形态——Python 3.14 下未导入的名字成为 `ForwardRef`，需在字符串前缀检查前取 `__forward_arg__`，同时不改变既有注解形态的判定。
+    anchors:
+      - score: 0.0
+        description: 在调用侧吞掉 `NameError`，或把任意 `ForwardRef` 都当作 `ClassVar`。
+      - score: 0.5
+        description: 识别了 `ForwardRef` 但未覆盖 `ClassVar` 子串判定（如 `typing.ClassVar[dict]`）。
+      - score: 1.0
+        description: 正确解包 `ForwardRef` 后复用既有前缀检查，全部注解形态判定与上游一致。
+
+  - id: regression_risk
+    weight: 0.20
+    description: 既有 `ClassVar` 判定不回归：普通字符串 `ClassVar`、`typing.ClassVar`、`t.ClassVar[int]`、带引号注解，以及普通字段（非 ClassVar）仍被识别为实例字段。
+    anchors:
+      - score: 0.0
+        description: 普通注解被误判为 `ClassVar`，或 `ClassVar` 判定失效。
+      - score: 0.5
+        description: 主路径正确，个别注解形态行为变化。
+      - score: 1.0
+        description: 全部既有形态与上游修复一致。

@@ -7,3 +7,9 @@ tasks:
   - swe-flask-6096-ipv6-partition
   - swe-click-3493-echo-empty-bytes
   - swe-click-3769-progressbar-settle
+  - swe-werkzeug-3243-converter-strictness
+  - swe-click-3818-interrupt-exit-code
+  - swe-urllib3-5254-http2-probe-lock
+  - swe-attrs-1593-classvar-forward-ref
+  - swe-sympy-30530-inequality-singularities
+  - swe-sympy-30396-array-scalar-print

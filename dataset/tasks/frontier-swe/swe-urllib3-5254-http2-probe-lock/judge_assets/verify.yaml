@@ -1,0 +1,34 @@
+# 程序验证契约与复现记录
+repo: urllib3/urllib3
+repo_url: https://github.com/urllib3/urllib3
+base_commit: bcf84e6815f623521e1ffe3e6ab0224d778929c0
+fix_pr: https://github.com/urllib3/urllib3/pull/5254
+license: MIT
+
+environment:
+  python: "3.14"
+  os_notes: 已在 Windows 11 本机环境验证；判定不依赖真实网络（通过 mock 断言锁的释放）
+  setup:
+    - git clone https://github.com/urllib3/urllib3
+    - git checkout bcf84e6815f623521e1ffe3e6ab0224d778929c0
+    - pip install -e . pytest trustme "anyio[trio]" h2 httpx hypercorn cryptography quart quart-trio
+
+evaluation:
+  # 评测时序：base_commit -> 应用 test.patch -> 被测模型修复源码 -> 运行测试
+  apply:
+    - judge_assets/test.patch
+  fail_to_pass:
+    - "test/test_http2_probe.py::test_waiter_releases_lock_when_probe_result_is_available"
+  pass_to_pass:
+    - "test/test_http2_probe.py"
+    - "test/test_http2_connection.py"
+    - "test/test_poolmanager.py"
+  reference_fix: judge_assets/fix.patch
+
+verification:
+  verified_at: "2026-10-06"
+  method: 本地完整复现
+  steps:
+    - "base + test.patch：test/test_http2_probe.py 1 项失败（Expected 'release' to be called once. Called 0 times.）"
+    - "再应用 fix.patch：test/test_http2_probe.py 1 项通过"
+    - "回归：test/test_http2_connection.py 19 项通过；test/test_poolmanager.py 43 项通过"

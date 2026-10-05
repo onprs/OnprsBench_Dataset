@@ -1,0 +1,46 @@
+id: swe-click-3818-interrupt-exit-code
+revision: 1
+title: 修复 click 处理中止/错误期间第二次 KeyboardInterrupt 逃逸的问题
+suite: frontier-swe
+type: issue_resolution
+tags:
+  - fresh-swe
+  - click
+  - keyboard-interrupt
+  - error-handling
+  - race-condition
+lifecycle:
+  status: review
+  stage: fresh
+  superseded_by: null
+  errata: []
+freshness:
+  class: F2
+  created_at: "2026-10-06"
+  source_published_at: "2026-08-28"
+  dataset_release_at: "2026-10-06"
+difficulty:
+  author: hard
+source:
+  kind: github_issue
+  name: pallets/click issue #3802 + PR #3818
+  url: https://github.com/pallets/click/issues/3802
+  published_at: "2026-08-28"
+  license: BSD-3-Clause
+  redistribution: redistributable
+  attribution: Pallets projects（issue 与补丁内容遵循 BSD-3-Clause）
+  upstream_version: null
+  upstream_commit: cbb5b2df1ee3492115f8c2ee5cbb09e2271fc714
+  adapter: null
+contamination:
+  risk: medium
+  source_publication_date: "2026-08-28"
+  exact_problem_public: true
+  reference_public: true
+  transformation: []
+  notes: issue 与修复 PR 均公开；原竞态难以稳定复现，verifier 通过受控注入第二次 KeyboardInterrupt 判定，不依赖题面文本。
+license: BSD-3-Clause
+authors:
+  - onprs
+flagship: false
+notes: 本地复现验证记录见 judge_assets/verify.yaml。

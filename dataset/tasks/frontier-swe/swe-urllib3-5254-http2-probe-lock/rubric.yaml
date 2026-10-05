@@ -1,0 +1,34 @@
+rubric_version: 1
+dimensions:
+  - id: patch_correctness
+    weight: 0.60
+    description: 程序 verifier 判定：FAIL_TO_PASS 测试通过且 PASS_TO_PASS 无回归。
+    anchors:
+      - score: 0.0
+        description: FAIL_TO_PASS 测试仍失败。
+      - score: 0.5
+        description: FAIL_TO_PASS 通过但 PASS_TO_PASS 出现回归。
+      - score: 1.0
+        description: FAIL_TO_PASS 通过且 PASS_TO_PASS 无回归。
+
+  - id: root_cause
+    weight: 0.20
+    description: 修复是否补齐 per-origin 锁的所有权约定——等待者读到已缓存结果后释放锁并返回，探测者（拿到 None）继续持有锁直到 `set_and_release()`；异常路径同样释放。
+    anchors:
+      - score: 0.0
+        description: 在调用侧绕过锁或改用无锁读取，破坏缓存语义。
+      - score: 0.5
+        description: 等待者释放了锁，但探测者路径或异常路径的所有权被一并改变。
+      - score: 1.0
+        description: 按返回值区分两种角色，等待者释放、探测者持有，异常路径保持释放。
+
+  - id: regression_risk
+    weight: 0.20
+    description: 既有缓存语义保持：已缓存结果的快速路径、探测结果写入后所有等待者都能继续、缓存键与缓存值结构不被破坏。
+    anchors:
+      - score: 0.0
+        description: 缓存结果丢失或同一 host/port 被重复探测。
+      - score: 0.5
+        description: 主路径正确，个别场景（如已缓存后的快速路径）行为变化。
+      - score: 1.0
+        description: 全部既有缓存行为与上游修复一致。

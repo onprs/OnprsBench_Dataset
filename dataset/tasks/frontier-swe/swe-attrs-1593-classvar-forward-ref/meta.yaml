@@ -1,0 +1,46 @@
+id: swe-attrs-1593-classvar-forward-ref
+revision: 1
+title: 修复 attrs 在 Python 3.14 下无法识别未导入 ClassVar 注解的问题
+suite: frontier-swe
+type: issue_resolution
+tags:
+  - fresh-swe
+  - attrs
+  - classvar
+  - forward-reference
+  - annotations
+lifecycle:
+  status: review
+  stage: fresh
+  superseded_by: null
+  errata: []
+freshness:
+  class: F2
+  created_at: "2026-10-06"
+  source_published_at: "2026-06-28"
+  dataset_release_at: "2026-10-06"
+difficulty:
+  author: medium
+source:
+  kind: github_issue
+  name: python-attrs/attrs issue #1575 + PR #1593
+  url: https://github.com/python-attrs/attrs/issues/1575
+  published_at: "2026-06-28"
+  license: MIT
+  redistribution: redistributable
+  attribution: attrs contributors（issue 与补丁内容遵循 MIT）
+  upstream_version: null
+  upstream_commit: 6851ab593cd25f3c14393e9355d57d22bec2a074
+  adapter: null
+contamination:
+  risk: medium
+  source_publication_date: "2026-06-28"
+  exact_problem_public: true
+  reference_public: true
+  transformation: []
+  notes: issue 与修复 PR 均公开；判定测试依赖 Python 3.14 的注解延迟求值行为，程序 verifier 为准。
+license: MIT
+authors:
+  - onprs
+flagship: false
+notes: 本地复现验证记录见 judge_assets/verify.yaml。

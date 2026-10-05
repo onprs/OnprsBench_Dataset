@@ -1,0 +1,16 @@
+diff --git a/src/urllib3/http2/probe.py b/src/urllib3/http2/probe.py
+index 9ea900764f..bf9d5990a0 100644
+--- a/src/urllib3/http2/probe.py
++++ b/src/urllib3/http2/probe.py
+@@ -46,6 +46,11 @@ def acquire_and_get(self, host: str, port: int) -> bool | None:
+             key_lock.release()
+             raise
+ 
++        # Only the thread responsible for probing keeps the lock until
++        # set_and_release(). Waiters returning a cached result must release it.
++        if value is not None:
++            key_lock.release()
++
+         return value
+ 
+     def set_and_release(

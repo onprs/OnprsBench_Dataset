@@ -1,0 +1,127 @@
+diff --git a/sympy/printing/tests/test_numpy.py b/sympy/printing/tests/test_numpy.py
+index ae440c7fa063..995dcdc33d5f 100644
+--- a/sympy/printing/tests/test_numpy.py
++++ b/sympy/printing/tests/test_numpy.py
+@@ -392,3 +392,36 @@ def test_numpy_contains_integers():
+     result = f(arr)
+     expected = np.array([True, False, True])
+     assert np.array_equal(result, expected)
++
++
++def test_issue_30395_scalar_assignment():
++    # Assignments of purely scalar expressions must print as scalar code:
++    # they used to be converted to array operators, which printed a sum as
++    # nested add(...) calls and failed on functions.
++    from sympy.core.symbol import symbols
++    from sympy.functions.elementary.trigonometric import sin
++    from sympy.printing.numpy import JaxPrinter
++    x, y, z = symbols('x y z')
++    np_p = NumPyPrinter()
++    jp = JaxPrinter()
++    assert np_p.doprint(x + y + z, 'out') == 'out = x + y + z'
++    assert jp.doprint(x + y + z, 'out') == 'out = x + y + z'
++    expr = x**2 + sqrt(y) - sin(x*z)
++    assert np_p.doprint(expr, 'out') == 'out = x**2 + numpy.sqrt(y) - numpy.sin(x*z)'
++    assert jp.doprint(expr, 'out') == 'out = x**2 + jax.numpy.sqrt(y) - jax.numpy.sin(x*z)'
++    assert np_p.doprint(x*z, 'out') == 'out = x*z'
++
++    # Array expressions still go through the array operators:
++    from sympy.tensor.array.expressions.array_expressions import (
++        ArrayElementwiseApplyFunc, ArraySymbol)
++    A = ArraySymbol('A', (3, 3))
++    assert np_p.doprint(A + A, 'out') == 'out = numpy.einsum(",ab", 2, A)'
++    assert jp.doprint(ArrayElementwiseApplyFunc(sin, A)) == 'jax.numpy.sin(A)'
++    # Elementwise, also for matrix operands (not a matrix power):
++    from sympy.core.function import Lambda
++    from sympy.core.symbol import Dummy
++    d = Dummy('d')
++    M = MatrixSymbol('M', 3, 3)
++    assert np_p.doprint(ArrayElementwiseApplyFunc(Lambda(d, d**2), M)) == 'M**2'
++    N = MatrixSymbol('N', 3, 3)
++    assert np_p.doprint(ArrayElementwiseApplyFunc(Lambda(d, 2*d + 1), M + N)) == '2*(M + N) + 1'
+diff --git a/sympy/printing/tests/test_pycode.py b/sympy/printing/tests/test_pycode.py
+index d9d8e66b700d..5f38a2481aa0 100644
+--- a/sympy/printing/tests/test_pycode.py
++++ b/sympy/printing/tests/test_pycode.py
+@@ -469,6 +469,28 @@ def test_array_printer():
+     assert prntr.doprint(ArrayContraction(A, [2], [3])) == 'numpy.einsum("abcde->abe", A)'
+     assert prntr.doprint(Assignment(I[i,j,k], I[i,j,k])) == 'I = I'
+ 
++    # Elementwise function application prints as the (elementwise) NumPy
++    # function or arithmetic applied to the printed operand:
++    from sympy.core.function import Lambda
++    from sympy.core.symbol import Dummy, Symbol
++    from sympy.functions.elementary.trigonometric import sin
++    from sympy.tensor.array.expressions.array_expressions import ArrayElementwiseApplyFunc, ArrayTensorProduct
++    B = ArraySymbol('B', (3, 3))
++    d = Dummy('d')
++    assert prntr.doprint(ArrayElementwiseApplyFunc(sin, B)) == 'numpy.sin(B)'
++    assert prntr.doprint(ArrayElementwiseApplyFunc(Lambda(d, d**2), B)) == 'B**2'
++    assert prntr.doprint(ArrayElementwiseApplyFunc(Lambda(d, 1/d), ArrayContraction(ArrayTensorProduct(B, B), (1, 2)))) == \
++        'numpy.einsum("ab,bc->ac", B,B)**(-1.0)'
++    # Symbols in the function body are never confused with the operand:
++    s = Symbol('_elementwise_operand')
++    assert prntr.doprint(ArrayElementwiseApplyFunc(Lambda(d, d + s), B)) == 'B + _elementwise_operand'
++    s = Symbol('prefix_elementwise_operand_suffix')
++    assert prntr.doprint(ArrayElementwiseApplyFunc(Lambda(d, d + s), B)) == 'B + prefix_elementwise_operand_suffix'
++    nested = ArrayElementwiseApplyFunc(Lambda(d, d + 1), ArrayElementwiseApplyFunc(Lambda(d, d**2), B))
++    assert prntr.doprint(nested) == 'B**2 + 1'
++    assert prntr.doprint(ArrayElementwiseApplyFunc(Lambda(d, d**3), ArrayElementwiseApplyFunc(Lambda(d, d**2), B))) == '(B**2)**3'
++    assert prntr.doprint(ArrayElementwiseApplyFunc(sin, ArrayElementwiseApplyFunc(Lambda(d, d + 1), B))) == 'numpy.sin(B + 1)'
++
+     prntr = TensorflowPrinter()
+     assert prntr.doprint(ZeroArray(5)) == 'tensorflow.zeros((5,))'
+     assert prntr.doprint(OneArray(5)) == 'tensorflow.ones((5,))'
+diff --git a/sympy/printing/tests/test_tensorflow.py b/sympy/printing/tests/test_tensorflow.py
+index 8cedf47d0d82..0925a4908595 100644
+--- a/sympy/printing/tests/test_tensorflow.py
++++ b/sympy/printing/tests/test_tensorflow.py
+@@ -492,3 +492,13 @@ def test_tensorflow_isnan_isinf():
+     for _input, _expected in [(float('inf'), 0.0), (float('-inf'), 0.0), (float('nan'), 1.0), (1.0, 1.0)]:
+         _output = lambdify((x), expression, modules="tensorflow")(x=tf.constant([_input]))
+         assert (_output == _expected).numpy().all()
++
++
++def test_tensorflow_elementwise_apply_func():
++    from sympy.core.function import Lambda
++    from sympy.core.symbol import Dummy
++    from sympy.functions.elementary.trigonometric import sin
++    from sympy.tensor.array.expressions.array_expressions import ArrayElementwiseApplyFunc
++    d = Dummy('d')
++    assert tensorflow_code(ArrayElementwiseApplyFunc(sin, M)) == 'tensorflow.math.sin(M)'
++    assert tensorflow_code(ArrayElementwiseApplyFunc(Lambda(d, d**2), M)) == 'tensorflow.math.pow(M, 2)'
+diff --git a/sympy/tensor/array/expressions/tests/test_convert_indexed_to_array.py b/sympy/tensor/array/expressions/tests/test_convert_indexed_to_array.py
+index 4d3416a19d3a..744e879464fe 100644
+--- a/sympy/tensor/array/expressions/tests/test_convert_indexed_to_array.py
++++ b/sympy/tensor/array/expressions/tests/test_convert_indexed_to_array.py
+@@ -283,3 +283,30 @@ def test_convert_indexed_to_array_multiarg_function():
+     # arguments after the first one:
+     f = Function("f")
+     raises(NotImplementedError, lambda: convert_indexed_to_array(f(M[i, j], N[i, j])))
++
++
++def test_convert_indexed_to_array_scalars_stay_scalars():
++    # An expression without array axes is a scalar and stays as it is
++    # (issue #30395: converting it to ArrayAdd/ArrayElementwiseApplyFunc
++    # made the array printers print scalar assignments as array code):
++    from sympy import sin, sqrt
++    x, y, z = symbols("x y z")
++    for expr in [x + y + z, x*z, x**2, sin(x), x**2 + sqrt(y) - sin(x*z),
++                 sin(x)*x**2 + 1/z]:
++        assert convert_indexed_to_array(expr) == expr
++
++    # Rank-0 array expressions (here the trace) are still converted, also
++    # as base of a power or argument of a function:
++    tr = Sum(M[i, i], (i, 0, k - 1))
++    trace = ArrayContraction(M, (0, 1))
++    assert convert_indexed_to_array(tr) == trace
++    assert convert_indexed_to_array(tr + x) == ArrayAdd(x, trace)
++    assert convert_indexed_to_array(tr**2) == \
++        ArrayContraction(ArrayTensorProduct(M, M), (0, 1), (2, 3))
++    d = Dummy("d")
++    assert convert_indexed_to_array(1/tr).dummy_eq(
++        ArrayElementwiseApplyFunc(Lambda(d, 1/d), trace))
++    assert convert_indexed_to_array(sqrt(tr)).dummy_eq(
++        ArrayElementwiseApplyFunc(Lambda(d, sqrt(d)), trace))
++    assert convert_indexed_to_array(sin(tr)).dummy_eq(
++        ArrayElementwiseApplyFunc(Lambda(d, sin(d)), trace))

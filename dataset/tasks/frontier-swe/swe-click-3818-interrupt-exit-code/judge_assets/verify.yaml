@@ -1,0 +1,36 @@
+# 程序验证契约与复现记录
+repo: pallets/click
+repo_url: https://github.com/pallets/click
+base_commit: cbb5b2df1ee3492115f8c2ee5cbb09e2271fc714
+fix_pr: https://github.com/pallets/click/pull/3818
+license: BSD-3-Clause
+
+environment:
+  python: "3.14"
+  os_notes: 已在 Windows 11 本机环境验证；原 issue 为时序竞态，verifier 用受控注入的第二次 KeyboardInterrupt 稳定判定
+  setup:
+    - git clone https://github.com/pallets/click
+    - git checkout cbb5b2df1ee3492115f8c2ee5cbb09e2271fc714
+    - pip install -e . pytest
+
+evaluation:
+  # 评测时序：base_commit -> 应用 test.patch -> 被测模型修复源码 -> 运行测试
+  apply:
+    - judge_assets/test.patch
+  fail_to_pass:
+    - "tests/test_abort_interrupt.py::test_interrupt_while_reporting_abort"
+    - "tests/test_abort_interrupt.py::test_interrupt_while_reporting_error"
+    - "tests/test_abort_interrupt.py::test_interrupt_while_exiting_after_success"
+  pass_to_pass:
+    - "tests/test_abort_interrupt.py"
+    - "tests/test_termui.py"
+    - "tests/test_basic.py"
+  reference_fix: judge_assets/fix.patch
+
+verification:
+  verified_at: "2026-10-06"
+  method: 本地完整复现
+  steps:
+    - "base + test.patch：tests/test_abort_interrupt.py 5 项失败、3 项通过（失败用例覆盖报告中止、报告错误、成功退出时中断）"
+    - "再应用 fix.patch：tests/test_abort_interrupt.py 8 项全部通过"
+    - "回归：tests/test_termui.py 264 项通过、18 项跳过；tests/test_basic.py 102 项通过"

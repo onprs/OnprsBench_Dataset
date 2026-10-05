@@ -34,14 +34,44 @@ sources:
     notes: 论文作为知识来源；衍生任务的题面与参考解答须为独立创作，source 字段记录具体论文链接。
 
   - id: github-pallets
-    name: GitHub Pallets 系列仓库（flask / click 等）
+    name: GitHub Pallets 系列仓库（flask / click / werkzeug 等）
     kind: github_issue
     url: https://github.com/pallets
     access: api
     license: BSD-3-Clause
     redistribution: redistributable
-    checked_at: "2026-10-05"
-    notes: frontier-swe 首批任务的来源；issue 正文与补丁按仓库许可再分发并署名。
+    checked_at: "2026-10-06"
+    notes: frontier-swe 任务来源（flask / click / werkzeug）；issue 正文与补丁按仓库许可再分发并署名。
+
+  - id: github-urllib3
+    name: GitHub urllib3/urllib3
+    kind: github_issue
+    url: https://github.com/urllib3/urllib3
+    access: api
+    license: MIT
+    redistribution: redistributable
+    checked_at: "2026-10-06"
+    notes: frontier-swe 任务来源；issue 正文与补丁按仓库许可再分发并署名。
+
+  - id: github-attrs
+    name: GitHub python-attrs/attrs
+    kind: github_issue
+    url: https://github.com/python-attrs/attrs
+    access: api
+    license: MIT
+    redistribution: redistributable
+    checked_at: "2026-10-06"
+    notes: frontier-swe 任务来源；issue 正文与补丁按仓库许可再分发并署名。
+
+  - id: github-sympy
+    name: GitHub sympy/sympy
+    kind: github_issue
+    url: https://github.com/sympy/sympy
+    access: api
+    license: BSD-3-Clause（仓库 LICENSE 主许可；少量第三方来源文件有独立许可）
+    redistribution: redistributable
+    checked_at: "2026-10-06"
+    notes: frontier-swe 任务来源；入库内容仅涉及 sympy/solvers、sympy/printing 与 sympy/tensor 下的 BSD-3-Clause 代码与对应 issue/补丁。
 
   - id: github
     name: GitHub Issues / Pull Requests

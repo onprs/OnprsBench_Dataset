@@ -4,6 +4,17 @@
 
 ## [Unreleased]
 
+### 新增
+
+- frontier-swe 新增 6 个高难真实工程任务，均完成本地完整复现验证（base 上目标测试失败、应用上游修复后通过、相关测试文件无回归）：
+  - `swe-werkzeug-3243-converter-strictness`（pallets/werkzeug#3242，`int`/`float` URL 转换器的取值校验与构建语义）
+  - `swe-click-3818-interrupt-exit-code`（pallets/click#3802，报告中止/错误期间的迟到 `KeyboardInterrupt` 不再逃逸）
+  - `swe-urllib3-5254-http2-probe-lock`（urllib3/urllib3#5206，HTTP/2 探测缓存等待线程的锁释放）
+  - `swe-attrs-1593-classvar-forward-ref`（python-attrs/attrs#1575，Python 3.14 下未导入 `ClassVar` 的 ForwardRef 判定）
+  - `swe-sympy-30530-inequality-singularities`（sympy/sympy#30529，`reduce_inequalities` 保留分母奇点）
+  - `swe-sympy-30396-array-scalar-print`（sympy/sympy#30395，纯标量赋值与逐元素函数打印）
+- `sources/registry.yaml` 新增 urllib3（MIT）、attrs（MIT）、sympy（BSD-3-Clause）来源条目
+
 ## [0.4.0] - 2026-10-06
 
 ### 修复

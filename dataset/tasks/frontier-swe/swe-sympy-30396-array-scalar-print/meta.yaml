@@ -1,0 +1,46 @@
+id: swe-sympy-30396-array-scalar-print
+revision: 1
+title: 修复数组打印机把纯标量赋值打印为数组运算的问题
+suite: frontier-swe
+type: issue_resolution
+tags:
+  - fresh-swe
+  - sympy
+  - printing
+  - codegen
+  - array-expression
+lifecycle:
+  status: review
+  stage: fresh
+  superseded_by: null
+  errata: []
+freshness:
+  class: F2
+  created_at: "2026-10-06"
+  source_published_at: "2026-09-02"
+  dataset_release_at: "2026-10-06"
+difficulty:
+  author: very_hard
+source:
+  kind: github_issue
+  name: sympy/sympy issue #30395 + PR #30396
+  url: https://github.com/sympy/sympy/issues/30395
+  published_at: "2026-09-02"
+  license: BSD-3-Clause
+  redistribution: redistributable
+  attribution: SymPy contributors（issue 与补丁内容遵循 BSD-3-Clause）
+  upstream_version: null
+  upstream_commit: e0e25c8eaab46155ee7c35c783e3f6f41e147b9b
+  adapter: null
+contamination:
+  risk: medium
+  source_publication_date: "2026-09-02"
+  exact_problem_public: true
+  reference_public: true
+  transformation: []
+  notes: issue 与修复 PR 均公开，issue 正文含一条建议方案，但该方案无法覆盖逐元素函数与矩阵操作数的打印要求；以程序 verifier 为准。
+license: BSD-3-Clause
+authors:
+  - onprs
+flagship: false
+notes: 本地复现验证记录见 judge_assets/verify.yaml。
