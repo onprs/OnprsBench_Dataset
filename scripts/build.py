@@ -147,7 +147,8 @@ def build_dataset(
     shutil.copy2(root / "LICENSE", artifact_dir / "LICENSE")
 
     manifest_path = artifact_dir / "manifest.yaml"
-    manifest_path.write_text(dump_yaml(manifest), encoding="utf-8")
+    # manifest.yaml 的字节是 manifest hash 的依据：固定 LF 换行，保证跨平台可复现
+    manifest_path.write_text(dump_yaml(manifest), encoding="utf-8", newline="\n")
 
     # 打包与校验和
     tarball_path = out_root / f"{artifact_name}.tar.gz"
@@ -163,6 +164,7 @@ def build_dataset(
         f"{manifest_sha}  {artifact_name}/manifest.yaml\n"
         f"{tarball_sha}  {artifact_name}.tar.gz\n",
         encoding="utf-8",
+        newline="\n",
     )
     return manifest_path
 

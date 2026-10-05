@@ -4,6 +4,11 @@
 
 ## [Unreleased]
 
+### 修复
+
+- 新增 `.gitattributes`（`dataset/** -text`）：禁止 git 换行符转换，保证工作区文件字节与仓库对象一致（bundle hash 按原始字节计算，Windows 上 core.autocrlf=true 的 checkout 会破坏 hash 稳定性）
+- `build.py` 写出 manifest.yaml 与 SHA256SUMS 时固定 LF 换行，保证同一内容跨平台构建出相同的 manifest hash（0.4.0 及之前版本的 manifest.yaml 为 CRLF 字节，发布产物自洽不受影响；本修复对后续版本生效）
+
 ### 改进
 
 - PROTOCOL.md 框架环境义务补充：安装数据集时预取判定契约所需的仓库快照，Run 判定时缓存未命中再重试
