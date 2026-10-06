@@ -61,10 +61,11 @@ python -m unittest discover tests
 
 | 产物 | 内容 | 适用场景 |
 | --- | --- | --- |
-| `onprsbench-dataset-<version>` | 任务内容（题面、参考解、rubric、判定资产） | 判定资源按需下载；体积小，网络可用时更轻量 |
+| `onprsbench-dataset-<version>` | 任务内容（题面、参考解、rubric、判定资产） | 导入时下载全部判定资源，任一失败即导入失败并提示改用完整数据集；体积小 |
 | `onprsbench-dataset-<version>-full` | 任务内容 + 仓库快照与上游许可（`resources/`） | 安装后判定不联网，适合网络受限或要求判定环境完整复现的场景 |
 
 两套产物的 dataset id、版本号与 commit 相同，框架以 manifest hash 区分并追溯；完整形态的资源随产物给出许可文本与署名。
+标准形态在导入时完成全部判定资源下载；下载失败时导入整体失败并给出失败项与提示，不会留下半安装状态。
 
 ## 许可
 
