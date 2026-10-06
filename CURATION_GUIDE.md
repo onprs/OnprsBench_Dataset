@@ -2,6 +2,15 @@
 
 本指南规范自有任务（重点是 frontier-paper suite）的生产流程与质量标准。目标能力是"新任务适应能力"：即使模型读过来源论文，也无法靠背答案得分。
 
+## 0. 正确性来源（红线）
+
+题目与标准答案必须锚定在来源中已存在的、可复核的内容上。禁止由 AI（或任何模型）出题后自行解答并自证正确。
+
+- **可接受的答案锚点**：来源论文中已发表的定理 / 引理 / 证明（记录编号或页码）、论文的官方参考实现（记录仓库与 commit）、上游官方题解与评测数据（记录 URL 与 hash）、可复现实验的原始数据。
+- **AI 的职责边界**：来源核实与登记、素材抓取与格式转换、清单维护与机械校验的执行和记录。AI 不产出题目构思、不撰写参考答案、不为自己的解答提供正确性依据。
+- **来源未覆盖的新推导**（经第 2 节变换产生）：必须由未参与该题生产的人类领域专家独立复核，或由不依赖 AI 判断的机械 verifier（程序判定）支持；两者都无法提供时放弃该题。
+- 每个提案必须填写"答案锚点"栏（见 `curation/templates/task-proposal.md`），记录来源、可复核位置与 hash。
+
 ## 1. frontier-paper 标准流程
 
 ```
@@ -20,11 +29,13 @@ Source Discovery
 2. **Paper Selection**：优先选择提出新方法 / 新算法 / 新界限、且核心思想可被改造成新问题的论文。记录选稿理由。
 3. **Core Contribution Extraction**：用 2–3 句话写下论文的核心机制与关键假设，作为改造起点。该摘要是内部工作文档。
 4. **Task Design**：对核心思想做变换，见第 2 节。
-5. **Reference Construction**：独立完成参考解答（canonical + alternatives + proof + pitfalls），参考解答必须可独立验证。
+5. **Reference Construction**：独立完成参考解答（canonical + alternatives + proof + pitfalls），参考解答必须可独立验证，并按第 0 节锚定来源中已发表的结论或机械 verifier。
 6. **Rubric**：按任务类型设计维度与锚点，见第 3 节。
 7. **Independent Review**：由未参与出题的人按 `curation/templates/review-checklist.md` 独立解题并评审。
 8. **Baseline Testing**：交由框架对若干基线模型试跑，确认题目可解、rubric 可区分；结果作为 analysis artifact 回流，不写入 meta.yaml。
 9. **Active**：合并并在下一次发布进入 active。
+
+> `fp-ski-rental-discount` 是协议结构示例，仅用于验证 solver/judge 可见性隔离与 rubric/anchor 判分链路；它不作为题目内容模板，也不计入论文衍生题的数量。
 
 ## 2. 任务设计模式（论文只是知识来源）
 
@@ -46,7 +57,7 @@ Source Discovery
 
 ## 4. 质量关卡
 
-高价值任务入库前尽可能完成：来源核实 → 题面评审 → 参考解答评审 → rubric 评审 → 独立可解性评审 → judge 行为测试 → 基线模型运行。每关记录在任务提案（`curation/templates/task-proposal.md`）的对应栏目。
+高价值任务入库前尽可能完成：来源核实 → 答案锚点核实 → 题面评审 → 参考解答评审 → rubric 评审 → 独立可解性评审 → judge 行为测试 → 基线模型运行。每关记录在任务提案（`curation/templates/task-proposal.md`）的对应栏目。
 
 ## 5. Fresh SWE 生产线
 

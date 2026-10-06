@@ -19,6 +19,7 @@ python scripts/validate.py    # 提交前必须通过
 - [ ] `python scripts/validate.py` 通过
 - [ ] `python -m unittest discover tests` 通过
 - [ ] 每个新任务的 source 许可与再分发分级填写完整（见 LICENSING.md）
+- [ ] 参考答案锚定来源中可复核的内容，未由 AI 出题并自解自证（见 CURATION_GUIDE 第 0 节）
 - [ ] solver_visible 与 judge_visible 无串漏（题面不含答案线索，参考包不含对 solver 的暗示性描述）
 - [ ] 新任务初始 `revision: 1`、`status: draft` 或 `review`
 - [ ] 未提交任何 API key、运行结果、个人配置
