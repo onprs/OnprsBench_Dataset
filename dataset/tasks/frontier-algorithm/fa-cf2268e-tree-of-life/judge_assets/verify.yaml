@@ -1,0 +1,44 @@
+# 程序验证契约与对拍记录
+source:
+  contest: 2268
+  index: E
+  rating: 2700
+  tags: [data structures, fft, math, trees]
+  contest_date: "2026-09-26"
+  statement_url: https://codeforces.com/contest/2268/problem/E
+  editorial_url: https://codeforces.com/blog/entry/157140
+  limits: { time: "3s", memory: "256MB", sum_n: 200000, value_bits: 18, modulus: 998244353 }
+
+redistribution: research_archive   # 题面/题解/官方代码已归档入库（署名，可下架），见 LICENSING.md
+archived_content:
+  statement: problem.md
+  samples: judge_assets/samples.json
+  editorial: reference/editorial.md
+  reference_solution: judge_assets/reference_solution.cpp
+
+local_import:
+  importer: scripts/import_cf_task.py
+  command: python scripts/import_cf_task.py --contest 2268 --index E
+  output_dir: imported/cf/2268e/
+  # 对规范化文本（UTF-8、LF 换行）计算的 sha256 前 16 位；用于核对上游内容是否变动
+  content_sha256:
+    statement.txt: 7b67a37f8435f3e5
+    samples.json: 911c52737ff045bd
+    editorial.txt: 236f7818561eaaba
+    official.cpp: 0191bda09a55d779
+
+evaluation:
+  mode: 程序判题
+  # 判定期望输出来源（编译后运行），路径相对任务根
+  reference_solution: judge_assets/reference_solution.cpp
+  # 官方样例 [{input, output}]，路径相对任务根
+  samples: judge_assets/samples.json
+  # 应力测试：generator.py 生成输入，期望输出由 reference_solution 计算
+  harness:
+    generator: judge_assets/generator.py
+    brute_force: judge_assets/brute_force.py
+
+verification:
+  verified_at: "2026-10-06"
+  method: 官方题解代码（g++ -O2 编译）与 Catalan 树枚举暴力对拍 + 官方样例回归
+  result: 600 个随机小规模用例对拍完全一致；官方样例通过

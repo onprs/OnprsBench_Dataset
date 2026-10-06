@@ -20,8 +20,8 @@ sources:
     access: api
     license: 题面权利归平台与作者，未见显式再分发授权
     redistribution: research_archive
-    checked_at: "2026-10-05"
-    notes: 研究基准收录先例存在（code_contests、LiveCodeBench）；按 research_archive 归档题面/题解/官方代码并署名，记录上游 hash，权利方异议即下架。API 不提供题面正文；公开网页以浏览器 UA 可读（2026-10-05 实测）；抓取用 scripts/import_cf_task.py。
+    checked_at: "2026-10-06"
+    notes: 研究基准收录先例存在（code_contests、LiveCodeBench）；按 research_archive 归档题面/题解/官方代码并署名，记录上游 hash，权利方异议即下架。API 不提供题面正文；公开网页以浏览器 UA 可读（2026-10-06 复核）；抓取用 scripts/import_cf_task.py（近期已用于 2268/2266/2264 等比赛）。
 
   - id: arxiv
     name: arXiv

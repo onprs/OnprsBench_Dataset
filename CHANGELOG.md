@@ -23,6 +23,12 @@
   - `swe-sympy-30530-inequality-singularities`（sympy/sympy#30529，`reduce_inequalities` 保留分母奇点）
   - `swe-sympy-30396-array-scalar-print`（sympy/sympy#30395，纯标量赋值与逐元素函数打印）
 - `sources/registry.yaml` 新增 urllib3（MIT）、attrs（MIT）、sympy（BSD-3-Clause）来源条目
+- frontier-algorithm 新增 5 个高难题（Codeforces Round 1121/1122/1124，rating 2200–2700），全部经官方参考代码与暴力对拍验证：
+  - `fa-cf2268c-energy-intervals`（Round 1124 Div.1 C，rating 2300）
+  - `fa-cf2268d-aghabalasar-hamed`（Round 1124 Div.1 D，rating 2600）
+  - `fa-cf2268e-tree-of-life`（Round 1124 Div.1 E，rating 2700）
+  - `fa-cf2266g-modular-tree`（Round 1122 Div.3 G，rating 2200）
+  - `fa-cf2264e2-prime-flood`（Round 1121 Div.2 E2，rating 2700）
 
 ## [0.4.0] - 2026-10-06
 

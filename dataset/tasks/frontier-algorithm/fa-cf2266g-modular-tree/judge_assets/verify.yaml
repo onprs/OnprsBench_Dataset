@@ -1,0 +1,44 @@
+# 程序验证契约与对拍记录
+source:
+  contest: 2266
+  index: G
+  rating: 2200
+  tags: [dfs and similar, dp, greedy, math, number theory, trees]
+  contest_date: "2026-09-21"
+  statement_url: https://codeforces.com/contest/2266/problem/G
+  editorial_url: https://codeforces.com/blog/entry/156984
+  limits: { time: "3s", memory: "256MB", sum_n: 200000, modulus_upper: 1000000000 }
+
+redistribution: research_archive   # 题面/题解/官方代码已归档入库（署名，可下架），见 LICENSING.md
+archived_content:
+  statement: problem.md
+  samples: judge_assets/samples.json
+  editorial: reference/editorial.md
+  reference_solution: judge_assets/reference_solution.cpp
+
+local_import:
+  importer: scripts/import_cf_task.py
+  command: python scripts/import_cf_task.py --contest 2266 --index G
+  output_dir: imported/cf/2266g/
+  # 对规范化文本（UTF-8、LF 换行）计算的 sha256 前 16 位；用于核对上游内容是否变动
+  content_sha256:
+    statement.txt: 2456401bd8be8779
+    samples.json: c745de25c58f7fb9
+    editorial.txt: 325b53620801533f
+    official.cpp: eb32d4f8f11c7c67
+
+evaluation:
+  mode: 程序判题
+  # 判定期望输出来源（编译后运行），路径相对任务根
+  reference_solution: judge_assets/reference_solution.cpp
+  # 官方样例 [{input, output}]，路径相对任务根
+  samples: judge_assets/samples.json
+  # 应力测试：generator.py 生成输入，期望输出由 reference_solution 计算
+  harness:
+    generator: judge_assets/generator.py
+    brute_force: judge_assets/brute_force.py
+
+verification:
+  verified_at: "2026-10-06"
+  method: 官方题解代码（g++ -O2 编译）与可达状态 BFS 暴力对拍 + 官方样例回归
+  result: 500 个随机小规模用例对拍完全一致；官方样例通过（官方样例含 1e9 级模数，超出暴力可行范围，暴力仅覆盖小模数随机用例）

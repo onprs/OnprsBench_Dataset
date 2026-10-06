@@ -1,0 +1,23 @@
+rubric_version: 1
+dimensions:
+  - id: correctness
+    weight: 0.75
+    description: 程序 verifier 判定：通过官方样例，且通过生成器产生的应力测试集（期望输出由官方参考代码计算，并经暴力对拍确认）。
+    anchors:
+      - score: 0.0
+        description: 官方样例未通过。
+      - score: 0.5
+        description: 样例通过但应力测试存在失败用例。
+      - score: 1.0
+        description: 样例与应力测试全部通过。
+
+  - id: efficiency
+    weight: 0.25
+    description: 复杂度满足 Hard Version 约束：在题目时限（3s）内处理 n ≤ 3e5 的输入（Σn ≤ 3e5）。满分要求近似线性（radical sieve + 压缩行/blocker 列表，官方实现约 6e6 预处理对与 6e5 断点）。
+    anchors:
+      - score: 0.0
+        description: 枚举子序列或 O(n³) 及以上做法。
+      - score: 0.5
+        description: 使用 Easy Version 的 O(M²) 建表与 O(n²) 统计，在 M = 3e5 下无法运行。
+      - score: 1.0
+        description: 压缩 DP 行与子序列统计，预处理与查询均近似线性，最大规模在时限内完成。

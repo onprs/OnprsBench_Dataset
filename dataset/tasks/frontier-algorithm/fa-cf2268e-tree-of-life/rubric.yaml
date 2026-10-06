@@ -1,0 +1,23 @@
+rubric_version: 1
+dimensions:
+  - id: correctness
+    weight: 0.75
+    description: 程序 verifier 判定：通过官方样例，且通过生成器产生的应力测试集（期望输出由官方参考代码计算，并经暴力对拍确认）。
+    anchors:
+      - score: 0.0
+        description: 官方样例未通过。
+      - score: 0.5
+        description: 样例通过但应力测试存在失败用例。
+      - score: 1.0
+        description: 样例与应力测试全部通过。
+
+  - id: efficiency
+    weight: 0.25
+    description: 复杂度满足约束：在题目时限（3s）内处理最大规模输入（Σn ≤ 2e5，a_i < 2^18）。满分要求 O(18n log n)（按位独立 + 一次正向 NTT 与 Parseval 恒等式）。
+    anchors:
+      - score: 0.0
+        description: 枚举所有树或 O(n²) 以上做法。
+      - score: 0.5
+        description: 得到按位计数但每个 bit 做一次逆变换（O(18n log n) 常数过大写错），或仅使用 O(n²) 统计 D_l。
+      - score: 1.0
+        description: 前缀 XOR 自相关 + 权重 NTT/Parseval，O(18n log n)，最大规模在时限内完成。

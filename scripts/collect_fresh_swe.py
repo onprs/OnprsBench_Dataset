@@ -119,13 +119,14 @@ def stage(candidate: dict, staging: Path) -> Path:
         f"# {issue_detail['title']}\n\n来源：{issue['url']}\n\n"
         + (issue_detail.get("body") or "（无正文）"),
         encoding="utf-8",
+        newline="\n",
     )
 
     diff = gh_rest(f"repos/{repo}/pulls/{candidate['pr']}", accept="application/vnd.github.v3.diff")
-    (dest / "fix.diff").write_text(diff, encoding="utf-8")
+    (dest / "fix.diff").write_text(diff, encoding="utf-8", newline="\n")
 
     (dest / "candidate.yaml").write_text(
-        json.dumps(candidate, ensure_ascii=False, indent=2), encoding="utf-8"
+        json.dumps(candidate, ensure_ascii=False, indent=2), encoding="utf-8", newline="\n"
     )
     return dest
 

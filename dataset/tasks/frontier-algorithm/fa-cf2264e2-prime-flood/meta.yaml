@@ -1,0 +1,46 @@
+id: fa-cf2264e2-prime-flood
+revision: 1
+title: Codeforces Round 1121 (Div. 2) E2 — A Prime Flood (Hard Version)
+suite: frontier-algorithm
+type: code_generation
+tags:
+  - fresh-contest
+  - brute-force
+  - combinatorics
+  - dp
+  - number-theory
+lifecycle:
+  status: review
+  stage: fresh
+  superseded_by: null
+  errata: []
+freshness:
+  class: F1
+  created_at: "2026-10-06"
+  source_published_at: "2026-09-13"
+  dataset_release_at: "2026-10-06"
+difficulty:
+  author: very_hard
+source:
+  kind: contest
+  name: Codeforces Round 1121 (Div. 2) Problem E2
+  url: https://codeforces.com/contest/2264/problem/E2
+  published_at: "2026-09-13"
+  license: 题面与题解归 Codeforces 与原作者所有，按研究基准收录（署名，权利方可要求下架）
+  redistribution: research_archive
+  attribution: Codeforces Round 1121 (Div. 2)；Problem by qwexd，Hard Version 由 jeroenodb 求解
+  upstream_version: 比赛 2264 / 官方题解 blog entry 156680
+  upstream_commit: null
+  adapter: null
+contamination:
+  risk: medium
+  source_publication_date: "2026-09-13"
+  exact_problem_public: true
+  reference_public: true
+  transformation: []
+  notes: 题面与官方题解均公开；污染防护依赖新鲜度（F1，比赛后 23 天入库）。评判完全由程序 verifier 完成。
+license: 题面/题解归 Codeforces 与作者（研究基准收录）；任务包装与校验代码 CC BY 4.0 / MIT
+authors:
+  - onprs
+flagship: false
+notes: 官方参考代码与子序列状态搜索暴力对拍一致（500 随机用例）且通过官方样例，记录见 judge_assets/verify.yaml。

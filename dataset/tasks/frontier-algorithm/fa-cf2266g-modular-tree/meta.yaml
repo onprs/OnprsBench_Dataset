@@ -1,0 +1,48 @@
+id: fa-cf2266g-modular-tree
+revision: 1
+title: Codeforces Round 1122 (Div. 3) G — Modular Tree
+suite: frontier-algorithm
+type: code_generation
+tags:
+  - fresh-contest
+  - dfs-and-similar
+  - dp
+  - greedy
+  - math
+  - number-theory
+  - trees
+lifecycle:
+  status: review
+  stage: fresh
+  superseded_by: null
+  errata: []
+freshness:
+  class: F1
+  created_at: "2026-10-06"
+  source_published_at: "2026-09-21"
+  dataset_release_at: "2026-10-06"
+difficulty:
+  author: hard
+source:
+  kind: contest
+  name: Codeforces Round 1122 (Div. 3) Problem G
+  url: https://codeforces.com/contest/2266/problem/G
+  published_at: "2026-09-21"
+  license: 题面与题解归 Codeforces 与原作者所有，按研究基准收录（署名，权利方可要求下架）
+  redistribution: research_archive
+  attribution: Codeforces Round 1122 (Div. 3)；题解为官方题解（作者未单独标注）
+  upstream_version: 比赛 2266 / 官方题解 blog entry 156984
+  upstream_commit: null
+  adapter: null
+contamination:
+  risk: medium
+  source_publication_date: "2026-09-21"
+  exact_problem_public: true
+  reference_public: true
+  transformation: []
+  notes: 题面与官方题解均公开；污染防护依赖新鲜度（F1，比赛后 15 天入库）。评判完全由程序 verifier 完成。
+license: 题面/题解归 Codeforces 与作者（研究基准收录）；任务包装与校验代码 CC BY 4.0 / MIT
+authors:
+  - onprs
+flagship: false
+notes: 官方参考代码与状态空间暴力对拍一致（500 随机用例）且通过官方样例，记录见 judge_assets/verify.yaml。

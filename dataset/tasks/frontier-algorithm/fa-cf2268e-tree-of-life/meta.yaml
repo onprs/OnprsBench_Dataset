@@ -1,0 +1,46 @@
+id: fa-cf2268e-tree-of-life
+revision: 1
+title: Codeforces Round 1124 (Div. 1) E — Kia Kio and Tree of Life
+suite: frontier-algorithm
+type: code_generation
+tags:
+  - fresh-contest
+  - data-structures
+  - fft
+  - math
+  - trees
+lifecycle:
+  status: review
+  stage: fresh
+  superseded_by: null
+  errata: []
+freshness:
+  class: F1
+  created_at: "2026-10-06"
+  source_published_at: "2026-09-26"
+  dataset_release_at: "2026-10-06"
+difficulty:
+  author: very_hard
+source:
+  kind: contest
+  name: Codeforces Round 1124 (Div. 1) Problem E
+  url: https://codeforces.com/contest/2268/problem/E
+  published_at: "2026-09-26"
+  license: 题面与题解归 Codeforces 与原作者所有，按研究基准收录（署名，权利方可要求下架）
+  redistribution: research_archive
+  attribution: Codeforces Round 1124 (Div. 1)；Idea sweetweasel，Preparation Hamed_Ghaffari and _R00T
+  upstream_version: 比赛 2268 / 官方题解 blog entry 157140
+  upstream_commit: null
+  adapter: null
+contamination:
+  risk: medium
+  source_publication_date: "2026-09-26"
+  exact_problem_public: true
+  reference_public: true
+  transformation: []
+  notes: 题面与官方题解均公开；污染防护依赖新鲜度（F1，比赛后 10 天入库）。评判完全由程序 verifier 完成。
+license: 题面/题解归 Codeforces 与作者（研究基准收录）；任务包装与校验代码 CC BY 4.0 / MIT
+authors:
+  - onprs
+flagship: false
+notes: 官方参考代码与 Catalan 树枚举暴力对拍一致（600 随机用例）且通过官方样例，记录见 judge_assets/verify.yaml。

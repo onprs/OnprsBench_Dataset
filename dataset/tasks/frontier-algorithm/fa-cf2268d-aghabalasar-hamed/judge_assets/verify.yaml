@@ -1,0 +1,44 @@
+# 程序验证契约与对拍记录
+source:
+  contest: 2268
+  index: D
+  rating: 2600
+  tags: [data structures, dp, trees]
+  contest_date: "2026-09-26"
+  statement_url: https://codeforces.com/contest/2268/problem/D
+  editorial_url: https://codeforces.com/blog/entry/157140
+  limits: { time: "2s", memory: "256MB", sum_n: 1000000 }
+
+redistribution: research_archive   # 题面/题解/官方代码已归档入库（署名，可下架），见 LICENSING.md
+archived_content:
+  statement: problem.md
+  samples: judge_assets/samples.json
+  editorial: reference/editorial.md
+  reference_solution: judge_assets/reference_solution.cpp
+
+local_import:
+  importer: scripts/import_cf_task.py
+  command: python scripts/import_cf_task.py --contest 2268 --index D
+  output_dir: imported/cf/2268d/
+  # 对规范化文本（UTF-8、LF 换行）计算的 sha256 前 16 位；用于核对上游内容是否变动
+  content_sha256:
+    statement.txt: b9a22895a525e673
+    samples.json: 89a4614a29afc9e1
+    editorial.txt: 6fa7e80008d48dd8
+    official.cpp: e2e8964570795c5f
+
+evaluation:
+  mode: 程序判题
+  # 判定期望输出来源（编译后运行），路径相对任务根
+  reference_solution: judge_assets/reference_solution.cpp
+  # 官方样例 [{input, output}]，路径相对任务根
+  samples: judge_assets/samples.json
+  # 应力测试：generator.py 生成输入，期望输出由 reference_solution 计算
+  harness:
+    generator: judge_assets/generator.py
+    brute_force: judge_assets/brute_force.py
+
+verification:
+  verified_at: "2026-10-06"
+  method: 官方题解代码（g++ -O2 编译）与逐起点 BFS 暴力对拍 + 官方样例回归
+  result: 600 个随机小规模用例对拍完全一致；官方样例通过

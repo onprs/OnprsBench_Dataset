@@ -113,9 +113,12 @@ def main() -> int:
         f"{statement['statement']}\n\n## 输入\n{statement['input_spec']}\n\n"
         f"## 输出\n{statement['output_spec']}\n",
         encoding="utf-8",
+        newline="\n",
     )
     (dest / "samples.json").write_text(
-        json.dumps(statement["samples"], ensure_ascii=False, indent=2), encoding="utf-8"
+        json.dumps(statement["samples"], ensure_ascii=False, indent=2),
+        encoding="utf-8",
+        newline="\n",
     )
 
     tutorial = args.tutorial or find_tutorial_entry(args.contest)
@@ -123,9 +126,11 @@ def main() -> int:
         print("未找到官方题解链接", file=sys.stderr)
         return 1
     editorial = extract_editorial(fetch(f"https://codeforces.com/blog/entry/{tutorial}"), args.contest, args.index)
-    (dest / "editorial.txt").write_text(editorial["text"], encoding="utf-8")
+    (dest / "editorial.txt").write_text(editorial["text"], encoding="utf-8", newline="\n")
     if editorial["official_code"]:
-        (dest / "official.cpp").write_text(editorial["official_code"], encoding="utf-8")
+        (dest / "official.cpp").write_text(
+            editorial["official_code"], encoding="utf-8", newline="\n"
+        )
 
     print(f"导入完成：{dest.relative_to(REPO_ROOT)}（tutorial entry {tutorial}）")
     for name in ("statement.txt", "samples.json", "editorial.txt", "official.cpp"):
