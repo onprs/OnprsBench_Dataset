@@ -4,6 +4,21 @@
 
 ## [Unreleased]
 
+## [0.6.0] - 2026-10-07
+
+### 新增
+
+- 双分发形态：同一版本号发布标准数据集（`onprsbench-dataset-<version>`）与完整数据集（`onprsbench-dataset-<version>-full`）两套产物
+  - 标准形态：仅任务内容，判定资源在框架安装/判定时按需下载
+  - 完整形态：附带 `resources/`（仓库快照与上游许可），框架安装后判定不联网，避免判定时下载失败
+- manifest 新增可选字段 `distribution`（standard | full）与 `resources`（资源清单：path / bytes / sha256 / source 含许可与署名），协议版本不变
+
+### 改进
+
+- `scripts/build.py` 支持 `--distribution standard|full|both`，默认构建两套；产物分别命名为 `onprsbench-dataset-<version>` 与 `onprsbench-dataset-<version>-full`
+- 完整形态的仓库快照从 `imported/repos` 本地 clone 用 `git archive` 导出（gzip 固定 mtime，资源 hash 可复现），并提取上游许可文件随产物分发
+- 构建时自检资源文件的 path / bytes / sha256 与许可文件；`SHA256SUMS` 合并记录两套产物
+
 ## [0.5.0] - 2026-10-06
 
 ### 改进

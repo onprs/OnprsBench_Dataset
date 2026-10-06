@@ -32,8 +32,8 @@ pip install -r requirements.txt
 # 校验整个数据集（schema、引用、许可元数据、hash 一致性等）
 python scripts/validate.py
 
-# 构建发布产物（生成冻结的 manifest.yaml 与 SHA256SUMS，输出到 dist/）
-python scripts/build.py
+# 构建发布产物（默认同时生成标准与完整两套，输出到 dist/）
+python scripts/build.py --distribution both
 
 # 运行测试
 python -m unittest discover tests
@@ -54,6 +54,17 @@ python -m unittest discover tests
 ## 版本与发布
 
 数据集使用语义化版本（见 `VERSION`）。每次发布生成带完整 hash 清单的冻结产物，通过 `dataset id + dataset version + dataset commit + manifest hash` 唯一引用。已发布的内容只做 errata 记录，修改以新 revision / 新版本发布。
+
+## 分发形态
+
+同一版本号发布两套产物，任务内容一致：
+
+| 产物 | 内容 | 适用场景 |
+| --- | --- | --- |
+| `onprsbench-dataset-<version>` | 任务内容（题面、参考解、rubric、判定资产） | 判定资源按需下载；体积小，网络可用时更轻量 |
+| `onprsbench-dataset-<version>-full` | 任务内容 + 仓库快照与上游许可（`resources/`） | 安装后判定不联网，适合网络受限或要求判定环境完整复现的场景 |
+
+两套产物的 dataset id、版本号与 commit 相同，框架以 manifest hash 区分并追溯；完整形态的资源随产物给出许可文本与署名。
 
 ## 许可
 

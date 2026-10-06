@@ -20,6 +20,7 @@
 
 ```yaml
 protocol_version: "1"
+distribution: standard | full    # 分发形态，缺省 standard
 dataset:
   id: onprsbench-dataset
   name: OnprsBench Dataset
@@ -28,6 +29,13 @@ dataset:
   revision: <git commit sha>
   description: ...
   license: ...              # 汇总说明，细则见 LICENSING.md
+resources:                  # distribution: full 时附带的判定资源，否则省略
+  - id: repo-snapshot:pallets/click@<commit>
+    kind: repo_snapshot
+    path: resources/repos/pallets-click-<commit>.tar.gz
+    sha256: ...
+    bytes: 123456
+    source: { repo, url, commit, license, attribution, license_file }
 suites:
   - id: ...
     name: ...
@@ -50,6 +58,27 @@ suites:
 ```
 
 框架只能信任 manifest 中列出的内容；目录结构属于本仓库内部实现，可随时调整（调整不产生协议变更）。
+
+### 2.1 分发形态（distribution）
+
+同一版本号可以发布两套产物，任务内容一致，分发形态不同：
+
+| 形态 | 产物目录 | 判定资源 | 框架行为 |
+| --- | --- | --- | --- |
+| `standard` | `onprsbench-dataset-<version>/` | 不附带 | 安装时尽力预取，判定时缓存未命中重试下载 |
+| `full` | `onprsbench-dataset-<version>-full/` | 附带 `resources/` | 安装时校验并注册本地资源，判定不联网 |
+
+两套产物使用相同的 `dataset.id` / `dataset.version` / `revision`，由 `manifest hash` 区分；框架以 manifest hash 追溯历史 Run。`distribution` 缺省为 `standard`（兼容早期产物）。
+
+### 2.2 附带资源（resources）
+
+`distribution: full` 时，manifest 声明随产物分发的判定资源（含许可与署名）。规则：
+
+- 只有 `redistribution: redistributable` 的来源允许随产物分发（见 LICENSING.md），必须附许可文本与署名。
+- `path` 相对 manifest 所在目录，不得使用绝对路径或 `..`；每种资源必须给出 `bytes` 与 `sha256`。
+- 框架安装 `full` 产物时必须校验每个资源的 `path` / `bytes` / `sha256`，校验失败即拒绝安装；校验通过后把资源注册到本地缓存，判定时命中缓存、不联网。
+- 框架安装 `standard` 产物时按需预取资源，失败不阻断安装，判定时重试；预取失败时应提示用户改用 `full` 产物。
+- 资源不改变 task bundle 的 hash 规则（第 5 节）；资源自身的完整性由 `sha256` 校验，属于 manifest 冻结内容。
 
 ## 3. Task Bundle
 
