@@ -1,0 +1,34 @@
+rubric_version: 1
+dimensions:
+  - id: correctness
+    weight: 0.60
+    description: 程序 verifier 判定：通过样例，且通过生成器产生的应力测试集（期望输出由参考解计算，并与独立暴力枚举对拍确认）。
+    anchors:
+      - score: 0.0
+        description: 样例未通过。
+      - score: 0.5
+        description: 样例通过，但应力测试存在失败用例（输出不是缺失串，或长度/字典序选择错误）。
+      - score: 1.0
+        description: 样例与全部应力测试通过。
+
+  - id: edge_cases
+    weight: 0.20
+    description: 边界情形正确：σ = 1（答案为 a^(n+1)）、存在未出现字母（答案为最小未出现字母）、单字母串、周期串、答案长度超过 n 的情形。
+    anchors:
+      - score: 0.0
+        description: σ = 1 或存在缺失字母时输出错误（如越界、返回空串）。
+      - score: 0.5
+        description: 主流程正确，但个别边界（如全字母出现时退化为逐长度枚举）判错。
+      - score: 1.0
+        description: 全部边界用例与参考解一致。
+
+  - id: efficiency
+    weight: 0.20
+    description: 近线性实现：对 n 之和为 2e5、σ 至 26 的输入于 3 秒内完成；不依赖枚举所有候选词的指数级做法。
+    anchors:
+      - score: 0.0
+        description: 按长度枚举候选词（σ^l 级别）或对每个候选做 O(n) 检索，大规模用例超时。
+      - score: 0.5
+        description: 使用后缀结构但每次查询重建或额外开销大，接近时限。
+      - score: 1.0
+        description: 后缀自动机/后缀数组等线性或近线性构造，且最短缺失子串的搜索在自动机或等价结构上一次完成。

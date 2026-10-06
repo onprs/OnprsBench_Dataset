@@ -1,0 +1,28 @@
+# 程序验证契约与对拍记录
+source:
+  paper: arXiv:2610.04085
+  title: Exact Optimal Transport by Matching
+  authors: [Dmitry Kamenetsky]
+  published_at: "2026-10-02"
+  license: CC BY 4.0
+  paper_url: https://arxiv.org/abs/2610.04085
+  limits: { time: "3s", memory: "256MB", max_n: 400, max_t: 10, max_cost: 1000000 }
+
+redistribution: metadata_only   # 仅登记来源元数据；题面、参考解与生成器为独立撰写
+
+evaluation:
+  mode: 程序判题
+  # 判定期望输出来源（编译后运行），路径相对任务根
+  reference_solution: judge_assets/reference_solution.cpp
+  # 样例 [{input, output}]，路径相对任务根
+  samples: judge_assets/samples.json
+  # 应力测试：generator.py 生成输入，期望输出由 reference_solution 计算
+  harness:
+    generator: judge_assets/generator.py
+    brute_force: judge_assets/brute_force.py
+
+verification:
+  verified_at: "2026-10-06"
+  method: 参考解（Jonker-Volgenant 风格 O(n^3) 匈牙利算法，g++ -O2 编译）与独立暴力排列枚举、独立最小费用最大流实现对拍，并测最大规模耗时
+  scope: 300 组小用例（n ≤ 7）对拍暴力；12 组中等用例（n ∈ [10,35]）对拍最小费用流；10 组 n = 400 稠密用例计时
+  result: 全部一致；10 组 n = 400 用例总耗时约 0.5 秒

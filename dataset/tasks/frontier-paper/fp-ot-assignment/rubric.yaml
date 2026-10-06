@@ -1,0 +1,34 @@
+rubric_version: 1
+dimensions:
+  - id: correctness
+    weight: 0.60
+    description: 程序 verifier 判定：通过样例，且通过生成器产生的应力测试集（期望输出由参考解计算，并与独立暴力枚举/最小费用流对拍确认）。
+    anchors:
+      - score: 0.0
+        description: 样例未通过。
+      - score: 0.5
+        description: 样例通过，但应力测试存在失败用例（输出非最优值）。
+      - score: 1.0
+        description: 样例与全部应力测试通过。
+
+  - id: edge_cases
+    weight: 0.20
+    description: 边界情形正确：n = 1、费用全相等、费用含 0、植入排列结构、对角便宜结构、最大规模矩阵。
+    anchors:
+      - score: 0.0
+        description: n = 1 或全零矩阵等边界返回错误结果或崩溃。
+      - score: 0.5
+        description: 主流程正确，但个别结构（植入排列/对角便宜）下收敛到次优。
+      - score: 1.0
+        description: 全部边界与结构用例与参考解一致。
+
+  - id: efficiency
+    weight: 0.20
+    description: 复杂度满足约束：T = 10、n = 400 的稠密输入于 3 秒内完成；不依赖 n! 枚举或对每个排列重算。
+    anchors:
+      - score: 0.0
+        description: 枚举排列或使用指数级分支，最大规模超时。
+      - score: 0.5
+        description: 使用增量增广但每次重建全图或复杂度达 O(n^4)，接近时限。
+      - score: 1.0
+        description: O(n^3) 匈牙利/对偶增广或等价算法，10 组 n = 400 在时限内完成。

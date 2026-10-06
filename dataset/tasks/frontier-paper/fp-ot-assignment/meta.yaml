@@ -1,0 +1,48 @@
+id: fp-ot-assignment
+revision: 1
+title: 精确最优传输：平衡指派问题的最小费用
+suite: frontier-paper
+type: code_generation
+tags:
+  - optimal-transport
+  - assignment
+  - matching
+  - exact-optimization
+  - paper-derived
+lifecycle:
+  status: review
+  stage: fresh
+  superseded_by: null
+  errata: []
+freshness:
+  class: F0
+  created_at: "2026-10-06"
+  source_published_at: "2026-10-02"
+  dataset_release_at: "2026-10-06"
+difficulty:
+  author: hard
+source:
+  kind: paper
+  name: Exact Optimal Transport by Matching（arXiv:2610.04085）
+  url: https://arxiv.org/abs/2610.04085
+  published_at: "2026-10-02"
+  license: CC BY 4.0
+  redistribution: metadata_only
+  attribution: Dmitry Kamenetsky；任务规范、参考实现与测试数据由 OnprsBench 独立撰写
+  upstream_version: arXiv:2610.04085v1
+  upstream_commit: null
+  adapter: null
+contamination:
+  risk: medium
+  source_publication_date: "2026-10-02"
+  exact_problem_public: false
+  reference_public: false
+  transformation:
+    - 把论文的"精确 OT 等于指派问题"结论改写为给定费用矩阵求精确最优值的逐用例任务
+    - 规模设定与结构化实例（植入排列、对角便宜、低秩）用于区分近似做法与精确实现
+  notes: 论文发表 4 天后入库（F0）；指派问题本身是经典问题（教科书内容可能在训练数据中），但精确实现与结构化大矩阵仍有区分度；题面与测试为独立撰写。
+license: CC BY 4.0
+authors:
+  - onprs
+flagship: false
+notes: 参考解与暴力排列枚举（300 组）、最小费用流（12 组）对拍一致；10 组 n=400 用例约 0.5 秒；验证记录见 judge_assets/verify.yaml。

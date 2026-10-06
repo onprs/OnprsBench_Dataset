@@ -30,8 +30,8 @@ sources:
     access: api
     license: 各论文适用其页面标注的许可
     redistribution: metadata_only
-    checked_at: "2026-10-05"
-    notes: 论文作为知识来源；衍生任务的题面与参考解答须为独立创作，source 字段记录具体论文链接。
+    checked_at: "2026-10-06"
+    notes: 论文作为知识来源；衍生任务的题面与参考解答须为独立创作，source 字段记录具体论文链接。frontier-paper 首批论文衍生任务（2610.06717、2609.15848、2605.04826、2609.17713、2610.04085）按 metadata_only 接入，任务规范与参考实现为独立撰写并已机械验证。
 
   - id: github-pallets
     name: GitHub Pallets 系列仓库（flask / click / werkzeug 等）

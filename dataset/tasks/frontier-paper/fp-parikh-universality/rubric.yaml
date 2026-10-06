@@ -1,0 +1,34 @@
+rubric_version: 1
+dimensions:
+  - id: correctness
+    weight: 0.60
+    description: 程序 verifier 判定：通过样例，且通过生成器产生的应力测试集（期望输出由参考解计算，并与暴力枚举对拍确认）。
+    anchors:
+      - score: 0.0
+        description: 样例未通过。
+      - score: 0.5
+        description: 样例通过，但应力测试存在失败用例（存在指数或全称指数之一错误）。
+      - score: 1.0
+        description: 样例与全部应力测试通过。
+
+  - id: edge_cases
+    weight: 0.20
+    description: 边界情形按论文刻画正确处理：C = 0、C = A*B、A = 0 或 B = 0、k(k-1)/2 阈值取等、整除与非整除分支。
+    anchors:
+      - score: 0.0
+        description: 边界用例大面积错误（如 C = A*B 时把全称指数判成 0，或 C = 0 时漏掉 A,B ≥ 1 的 1 档）。
+      - score: 0.5
+        description: 主公式正确，但个别边界（阈值取等或整除分支）判错。
+      - score: 1.0
+        description: 全部边界用例与参考解一致。
+
+  - id: efficiency
+    weight: 0.20
+    description: 单用例常数时间、大整数安全：在 T = 5000、A, B ≤ 1e18 的输入上于 2 秒内完成，且不依赖枚举或逐 k 循环。
+    anchors:
+      - score: 0.0
+        description: 对 A+B 较大或 A,B 达 1e18 的用例超时或溢出报错。
+      - score: 0.5
+        description: 能在大参数下给出结果，但实现为逐 k 迭代等超线性做法，接近时限。
+      - score: 1.0
+        description: 每个三元组 O(1) 计算（整数平方根或等价闭式），5000 组大参数在时限内完成。

@@ -1,0 +1,28 @@
+# 程序验证契约与对拍记录
+source:
+  paper: arXiv:2605.04826
+  title: Faster Algorithms for Shortest Unique or Absent Substrings
+  authors: [Panagiotis Charalampopoulos, Manal Mohamed, Solon P. Pissis, Hilde Verbeek, Wiktor Zuba]
+  published_at: "2026-05-06"
+  license: CC BY 4.0
+  paper_url: https://arxiv.org/abs/2605.04826
+  limits: { time: "3s", memory: "256MB", sum_n: 200000, sigma: 26 }
+
+redistribution: metadata_only   # 仅登记来源元数据；题面、参考解与生成器为独立撰写
+
+evaluation:
+  mode: 程序判题
+  # 判定期望输出来源（编译后运行），路径相对任务根
+  reference_solution: judge_assets/reference_solution.cpp
+  # 样例 [{input, output}]，路径相对任务根
+  samples: judge_assets/samples.json
+  # 应力测试：generator.py 生成输入，期望输出由 reference_solution 计算
+  harness:
+    generator: judge_assets/generator.py
+    brute_force: judge_assets/brute_force.py
+
+verification:
+  verified_at: "2026-10-06"
+  method: 参考解（后缀自动机 + 按字母序 BFS，g++ -O2 编译）与独立暴力枚举（按长度与字典序枚举候选词并做子串匹配）对拍；大规模用例另做"缺失 + 全部更短词存在 + 同长度更小词存在"的证书检查
+  scope: 800 组小用例（σ ∈ [1,4]，n ≤ 120）；8 组大规模用例（σ ∈ [2,26]，n 至 2e5）证书检查
+  result: 小用例对拍全部一致；大规模用例证书全部通过，总耗时约 0.05 秒

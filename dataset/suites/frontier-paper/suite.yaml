@@ -5,3 +5,8 @@ layer: derived
 adapter: null
 tasks:
   - fp-ski-rental-discount
+  - fp-parikh-universality
+  - fp-triangle-threshold
+  - fp-sas-smallest
+  - fp-colored-knapsack
+  - fp-ot-assignment

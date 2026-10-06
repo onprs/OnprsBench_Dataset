@@ -1,0 +1,47 @@
+id: fp-sas-smallest
+revision: 1
+title: 字典序最小的最短缺失子串
+suite: frontier-paper
+type: code_generation
+tags:
+  - string-algorithms
+  - suffix-automaton
+  - absent-substring
+  - paper-derived
+lifecycle:
+  status: review
+  stage: fresh
+  superseded_by: null
+  errata: []
+freshness:
+  class: F2
+  created_at: "2026-10-06"
+  source_published_at: "2026-05-06"
+  dataset_release_at: "2026-10-06"
+difficulty:
+  author: medium
+source:
+  kind: paper
+  name: Faster Algorithms for Shortest Unique or Absent Substrings（arXiv:2605.04826）
+  url: https://arxiv.org/abs/2605.04826
+  published_at: "2026-05-06"
+  license: CC BY 4.0
+  redistribution: metadata_only
+  attribution: Panagiotis Charalampopoulos, Manal Mohamed, Solon P. Pissis, Hilde Verbeek, Wiktor Zuba；任务规范、参考实现与测试数据由 OnprsBench 独立撰写
+  upstream_version: arXiv:2605.04826v1
+  upstream_commit: null
+  adapter: null
+contamination:
+  risk: low
+  source_publication_date: "2026-05-06"
+  exact_problem_public: false
+  reference_public: false
+  transformation:
+    - 在论文的 SAS 定义上增加"字典序最小"的规范化约定，使输出唯一
+    - 将任务改写为给定 σ 与 S 的逐用例程序输出，覆盖 σ=1 与未出现字母等边界
+  notes: 论文发表 153 天后入库（F2）；题面为独立撰写的定义与 I/O 规范；参考实现与暴力枚举对拍验证。
+license: CC BY 4.0
+authors:
+  - onprs
+flagship: false
+notes: 参考解与暴力枚举在 800 组小用例上一致；8 组大规模用例通过缺失/最短/字典序证书检查；验证记录见 judge_assets/verify.yaml。

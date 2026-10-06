@@ -1,0 +1,34 @@
+rubric_version: 1
+dimensions:
+  - id: correctness
+    weight: 0.60
+    description: 程序 verifier 判定：通过样例，且通过生成器产生的应力测试集（期望输出由参考解计算，并与独立暴力枚举对拍确认）。
+    anchors:
+      - score: 0.0
+        description: 样例未通过。
+      - score: 0.5
+        description: 样例通过，但应力测试存在失败用例（最优值偏高或偏低）。
+      - score: 1.0
+        description: 样例与全部应力测试通过。
+
+  - id: edge_cases
+    weight: 0.20
+    description: 边界情形正确：负收益物品作为分隔符被保留、单色实例（同色两件即不可行）、容量为 0、最优解为空集、颜色编号不连续。
+    anchors:
+      - score: 0.0
+        description: 把负收益物品直接删除，或把"同色两件"当成可行，导致边界用例结果偏高。
+      - score: 0.5
+        description: 主流程正确，但个别边界（容量 0、空集、单色）处理错误。
+      - score: 1.0
+        description: 全部边界用例与参考解一致。
+
+  - id: efficiency
+    weight: 0.20
+    description: 在 n = 28、b = 300、T = 50 的规模上于 3 秒内完成；不依赖对 2^n 个全部子集的完整枚举。
+    anchors:
+      - score: 0.0
+        description: 枚举全部子集，n = 28 时超时。
+      - score: 0.5
+        description: 使用伪多项式 DP 但状态维度或常数过大，接近时限。
+      - score: 1.0
+        description: 状态规模约 O(n^3 b) 的 DP（或等价算法），上限规模在时限内完成。

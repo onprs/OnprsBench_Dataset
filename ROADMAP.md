@@ -3,7 +3,7 @@
 ## 现状（v0.2.0）
 
 - 协议 v1、schema、校验与构建工具、CI
-- frontier-paper：协议示例任务 1 个（fp-ski-rental-discount）
+- frontier-paper：6 个任务（协议示例 1 个 + 论文衍生实现型任务 5 个，均为程序判定契约）
 - frontier-swe：首批 3 个真实任务，全部经本地复现验证（采集器：scripts/collect_fresh_swe.py）
 - LiveCodeBench 适配器原型（metadata_only 模式）
 - HLE / HLE-Diamond、SWE-bench Verified 的适配器元数据与接入方案

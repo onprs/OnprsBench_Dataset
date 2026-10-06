@@ -1,0 +1,28 @@
+# 程序验证契约与对拍记录
+source:
+  paper: arXiv:2610.06717
+  title: Subsequence Analysis Problems for Binary Parikh Matrices
+  authors: [Szilárd Zsolt Fazekas, Xinhao Huang, Robert Mercaş]
+  published_at: "2026-10-05"
+  license: CC BY 4.0
+  title_url: https://arxiv.org/abs/2610.06717
+  limits: { time: "2s", memory: "256MB", max_t: 5000, max_ab: 1000000000000000000 }
+
+redistribution: metadata_only   # 仅登记来源元数据；题面、参考解与生成器为独立撰写
+
+evaluation:
+  mode: 程序判题
+  # 判定期望输出来源（解释运行），路径相对任务根
+  reference_solution: judge_assets/reference_solution.py
+  # 样例 [{input, output}]，路径相对任务根
+  samples: judge_assets/samples.json
+  # 应力测试：generator.py 生成输入，期望输出由 reference_solution 计算
+  harness:
+    generator: judge_assets/generator.py
+    brute_force: judge_assets/brute_force.py
+
+verification:
+  verified_at: "2026-10-06"
+  method: 参考实现按论文定理 3.3（存在指数）与定理 4.5（全称指数）的闭式刻画编写；对照暴力程序（枚举全部含 A 个 a、B 个 b 的词，计算 ∈-指数并按 C 分组取 max/min）
+  scope: A,B ∈ [0,8] 且 0 ≤ C ≤ A*B 的全部 1377 组参数；另随机 400 组 A,B ≤ 7 对拍
+  result: 全部一致；5000 组 A,B ≤ 1e18 的随机用例在 0.2 秒内完成

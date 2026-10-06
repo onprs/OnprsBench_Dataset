@@ -1,0 +1,47 @@
+id: fp-triangle-threshold
+revision: 1
+title: 随机顺序边流上的阈值三角计数
+suite: frontier-paper
+type: code_generation
+tags:
+  - streaming
+  - graph-algorithms
+  - triangle-counting
+  - paper-derived
+lifecycle:
+  status: review
+  stage: fresh
+  superseded_by: null
+  errata: []
+freshness:
+  class: F1
+  created_at: "2026-10-06"
+  source_published_at: "2026-09-14"
+  dataset_release_at: "2026-10-06"
+difficulty:
+  author: medium
+source:
+  kind: paper
+  name: Scalable Triangle Counting - The Threshold Algorithm（arXiv:2609.15848）
+  url: https://arxiv.org/abs/2609.15848
+  published_at: "2026-09-14"
+  license: arXiv 非独占分发许可（论文页面标注）
+  redistribution: metadata_only
+  attribution: Asaf Etgar, Anna Gilbert, Quanquan C. Liu, Andrew McGregor；任务规范、参考实现与测试数据由 OnprsBench 独立撰写
+  upstream_version: arXiv:2609.15848v1
+  upstream_commit: null
+  adapter: null
+contamination:
+  risk: low
+  source_publication_date: "2026-09-14"
+  exact_problem_public: false
+  reference_public: false
+  transformation:
+    - 把论文的随机顺序流模型改写为给定顺序的确定性逐步模拟，输出停止长度与估计值的既约分数
+    - 增加提前停止后仍须消费完整输入的 I/O 约束与大规模计时要求
+  notes: 论文发表 22 天后入库（F1）；题面为独立撰写的过程规范，未收录论文正文；参考实现与独立暴力模拟对拍验证。
+license: CC BY 4.0
+authors:
+  - onprs
+flagship: false
+notes: 参考解与暴力模拟在 4 组种子的 149 个小用例上一致；m = 2e5 稀疏流约 1 秒，K300 全流约 0.1 秒；验证记录见 judge_assets/verify.yaml。

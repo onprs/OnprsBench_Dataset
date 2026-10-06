@@ -1,0 +1,28 @@
+# 程序验证契约与对拍记录
+source:
+  paper: arXiv:2609.15848
+  title: Scalable Triangle Counting - The Threshold Algorithm
+  authors: [Asaf Etgar, Anna Gilbert, Quanquan C. Liu, Andrew McGregor]
+  published_at: "2026-09-14"
+  license: arXiv non-exclusive-distrib license
+  paper_url: https://arxiv.org/abs/2609.15848
+  limits: { time: "3s", memory: "256MB", sum_m: 200000, max_q: 1000000000000000000 }
+
+redistribution: metadata_only   # 仅登记来源元数据；题面、参考解与生成器为独立撰写
+
+evaluation:
+  mode: 程序判题
+  # 判定期望输出来源（编译后运行），路径相对任务根
+  reference_solution: judge_assets/reference_solution.cpp
+  # 样例 [{input, output}]，路径相对任务根
+  samples: judge_assets/samples.json
+  # 应力测试：generator.py 生成输入，期望输出由 reference_solution 计算
+  harness:
+    generator: judge_assets/generator.py
+    brute_force: judge_assets/brute_force.py
+
+verification:
+  verified_at: "2026-10-06"
+  method: 参考解（g++ -O2 编译）与独立暴力模拟（按定义用集合交逐边求公共邻居数）对拍，并对大输入计时
+  scope: 生成器 seed 7/11/23/101 中 m <= 2000 的共 149 个用例；另测试 m = 2e5 稀疏流与 K300 完全图
+  result: 对拍全部一致；m = 2e5 稀疏流约 1 秒，K300 全流约 0.1 秒

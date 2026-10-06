@@ -1,0 +1,34 @@
+rubric_version: 1
+dimensions:
+  - id: correctness
+    weight: 0.60
+    description: 程序 verifier 判定：通过样例，且通过生成器产生的应力测试集（期望输出由参考解计算，并与独立暴力模拟对拍确认）。
+    anchors:
+      - score: 0.0
+        description: 样例未通过。
+      - score: 0.5
+        description: 样例通过，但应力测试存在失败用例（停止长度或估计分数错误）。
+      - score: 1.0
+        description: 样例与全部应力测试通过。
+
+  - id: edge_cases
+    weight: 0.20
+    description: 边界情形正确：无三角形或阈值未达到（S = m、分数恰为 Q/1）、Q = 1 在第一条闭合三角形处停止、阈值取等（t = Q 时停止）、停止后仍正确消费剩余输入。
+    anchors:
+      - score: 0.0
+        description: 阈值取等或未达到阈值的分支处理错误（如 t = Q 时继续处理，或 S 计成 m）。
+      - score: 0.5
+        description: 主流程正确，但个别边界（如 Q 未达到时的输出约分、提前停止后的 S 计数）判错。
+      - score: 1.0
+        description: 全部边界用例与参考解一致。
+
+  - id: efficiency
+    weight: 0.20
+    description: 增量三角形计数复杂度合理：在 m = 2e5、稠密前缀与 Q 较小的情况下于 3 秒内完成，不依赖每次重新扫描已读边的 O(m^2) 或 O(m^3) 做法。
+    anchors:
+      - score: 0.0
+        description: 每次插入后重新枚举全部三角形或三元组，最大规模超时。
+      - score: 0.5
+        description: 使用公共邻居交集但每次重建邻接结构，接近时限。
+      - score: 1.0
+        description: 维护哈希邻接表并按较小邻居集合求交，最大规模在时限内完成。

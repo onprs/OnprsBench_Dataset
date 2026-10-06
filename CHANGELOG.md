@@ -16,6 +16,14 @@
 
 ### 新增
 
+- frontier-paper 新增 5 个论文衍生实现型任务（来源均为 2026 年近期论文，metadata_only 接入，题面、参考实现与测试为独立撰写）：
+  - `fp-parikh-universality`（arXiv:2610.06717，F0）：二进制 Parikh 矩阵语言的存在/全称普遍性指数，闭式刻画与暴力枚举对拍（1377 组参数）
+  - `fp-triangle-threshold`（arXiv:2609.15848，F1）：随机顺序边流上的阈值三角计数逐步模拟，停止长度与估计值既约分数，与暴力模拟对拍（149 个用例）
+  - `fp-sas-smallest`（arXiv:2605.04826，F2）：字典序最小的最短缺失子串，后缀自动机 BFS，与暴力枚举对拍（800 组小用例）并通过大规模证书检查
+  - `fp-colored-knapsack`（arXiv:2609.17713，F1）：彩色背包精确最优值，(t,d,a) 状态容量索引 DP，与暴力枚举对拍（1580 组用例）
+  - `fp-ot-assignment`（arXiv:2610.04085，F0）：精确最优传输/指派最优值，O(n^3) 匈牙利算法，与暴力排列和最小费用流对拍
+- `curation/proposals/`：5 道任务的提案记录（含答案锚点与质量关卡进度，独立评审与基线运行待完成）
+- `sources/registry.yaml`：arXiv 来源条目更新（checked_at 与论文衍生任务说明）
 - frontier-swe 新增 6 个高难真实工程任务，均完成本地完整复现验证（base 上目标测试失败、应用上游修复后通过、相关测试文件无回归）：
   - `swe-werkzeug-3243-converter-strictness`（pallets/werkzeug#3242，`int`/`float` URL 转换器的取值校验与构建语义）
   - `swe-click-3818-interrupt-exit-code`（pallets/click#3802，报告中止/错误期间的迟到 `KeyboardInterrupt` 不再逃逸）

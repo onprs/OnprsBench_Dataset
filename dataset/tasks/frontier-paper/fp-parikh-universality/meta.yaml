@@ -1,0 +1,47 @@
+id: fp-parikh-universality
+revision: 1
+title: 二进制 Parikh 矩阵语言的子序列普遍性指数
+suite: frontier-paper
+type: code_generation
+tags:
+  - formal-languages
+  - subsequence-universality
+  - parikh-matrices
+  - paper-derived
+lifecycle:
+  status: review
+  stage: fresh
+  superseded_by: null
+  errata: []
+freshness:
+  class: F0
+  created_at: "2026-10-06"
+  source_published_at: "2026-10-05"
+  dataset_release_at: "2026-10-06"
+difficulty:
+  author: hard
+source:
+  kind: paper
+  name: Subsequence Analysis Problems for Binary Parikh Matrices（arXiv:2610.06717）
+  url: https://arxiv.org/abs/2610.06717
+  published_at: "2026-10-05"
+  license: CC BY 4.0
+  redistribution: metadata_only
+  attribution: Szilárd Zsolt Fazekas, Xinhao Huang, Robert Mercaş；任务规范、参考实现与测试数据由 OnprsBench 独立撰写
+  upstream_version: arXiv:2610.06717v1
+  upstream_commit: null
+  adapter: null
+contamination:
+  risk: low
+  source_publication_date: "2026-10-05"
+  exact_problem_public: false
+  reference_public: false
+  transformation:
+    - 把论文的两种语言级普遍性指数合并为一道逐实例计算题，要求同时输出存在指数与全称指数
+    - 输入域扩展到 A,B ≤ 1e18 与阈值边界，越过枚举可解范围
+  notes: 论文发表后 1 天入库（F0）；题面为独立撰写的定义与 I/O 规范，未收录论文正文；参考解为论文定理 3.3 与 4.5 的机械形式转换，并已与独立暴力枚举对拍。
+license: CC BY 4.0
+authors:
+  - onprs
+flagship: false
+notes: 参考解与暴力枚举在 A,B ≤ 8 的全部 1377 组参数上一致；验证记录见 judge_assets/verify.yaml。

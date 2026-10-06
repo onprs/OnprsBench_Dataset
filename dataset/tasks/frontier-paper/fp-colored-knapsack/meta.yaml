@@ -1,0 +1,47 @@
+id: fp-colored-knapsack
+revision: 1
+title: 彩色背包问题的最优值
+suite: frontier-paper
+type: code_generation
+tags:
+  - knapsack
+  - dynamic-programming
+  - exact-optimization
+  - paper-derived
+lifecycle:
+  status: review
+  stage: fresh
+  superseded_by: null
+  errata: []
+freshness:
+  class: F1
+  created_at: "2026-10-06"
+  source_published_at: "2026-09-15"
+  dataset_release_at: "2026-10-06"
+difficulty:
+  author: hard
+source:
+  kind: paper
+  name: A tight 1/3-approximation algorithm and fully polynomial-time approximation schemes for the Colored Knapsack Problem（arXiv:2609.17713）
+  url: https://arxiv.org/abs/2609.17713
+  published_at: "2026-09-15"
+  license: CC BY 4.0
+  redistribution: metadata_only
+  attribution: Fabio Ciccarelli, Fabio Furini；任务规范、参考实现与测试数据由 OnprsBench 独立撰写
+  upstream_version: arXiv:2609.17713v1
+  upstream_commit: null
+  adapter: null
+contamination:
+  risk: low
+  source_publication_date: "2026-09-15"
+  exact_problem_public: false
+  reference_public: false
+  transformation:
+    - 选取论文的精确 DP 与颜色可行性刻画，构造"求最优值"的实现型任务（论文本体研究近似算法）
+    - 输入规模按精确求解可判定范围设定（n ≤ 28、b ≤ 300），并加入负收益物品与不连续颜色编号等边界
+  notes: 论文发表 21 天后入库（F1）；题面为独立撰写的问题定义与 I/O 规范；参考实现与暴力枚举对拍验证。
+license: CC BY 4.0
+authors:
+  - onprs
+flagship: false
+notes: 参考解与暴力枚举在 1500 组小用例与 80 组中等用例上一致；上限规模 5 组用例约 0.29 秒；验证记录见 judge_assets/verify.yaml。
