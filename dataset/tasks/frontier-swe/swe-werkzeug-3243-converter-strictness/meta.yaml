@@ -10,7 +10,7 @@ tags:
   - url-converter
   - validation
 lifecycle:
-  status: review
+  status: active
   stage: fresh
   superseded_by: null
   errata: []

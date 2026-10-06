@@ -10,7 +10,7 @@ tags:
   - forward-reference
   - annotations
 lifecycle:
-  status: review
+  status: active
   stage: fresh
   superseded_by: null
   errata: []

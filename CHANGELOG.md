@@ -4,6 +4,12 @@
 
 ## [Unreleased]
 
+## [0.5.0] - 2026-10-06
+
+### 改进
+
+- 全部 22 个任务完成独立评审（机械校验全量通过、21 个程序判定任务经 OnprsBench_Core 框架全量实测通过、内容抽查规范），`lifecycle.status` 由 review 推进为 active；评审记录见 `curation/reviews/2026-10-06-full-review.md`。`lifecycle.stage` 保持 fresh（基线模型运行未完成）
+
 ### 修复
 
 - 新增 `.gitattributes`（`dataset/** -text`）：禁止 git 换行符转换，保证工作区文件字节与仓库对象一致（bundle hash 按原始字节计算，Windows 上 core.autocrlf=true 的 checkout 会破坏 hash 稳定性）
